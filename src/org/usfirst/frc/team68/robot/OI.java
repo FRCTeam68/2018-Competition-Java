@@ -1,11 +1,13 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team68.robot;
+
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team68.robot.commands.*;
+
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -39,4 +41,77 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	
+	// Declare instance variables here
+
+	// Driver's Xbox Controller
+	private XboxController xboxDrive;
+	private Button xboxDriveA;
+	private Button xboxDriveB;
+	private Button xboxDriveX;
+	private Button xboxDriveY;
+	private Button xboxDriveRB;
+	private Button xboxDriveLB;
+	private Button xboxDriveBack;
+	private Button xboxDriveStart;
+	
+	// Manipulators Xbox Controller
+	private XboxController xboxManipulate;
+	
+	// Declare class variables here
+	private static OI oi;
+	
+	// Provide a class method using the Singleton
+	// design pattern which guarantees only one 
+	// intstance of this class will get created.
+	public static OI getOI(){
+		if (oi == null) {
+			oi = new OI();
+		}
+		return oi;	
+	}
+	
+	// Constructor
+	private OI() {
+		
+		// Drivers Xbox Controller Bindings
+		xboxDrive = new XboxController(RobotMap.XBOX_DRIVE);	
+		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE);
+		
+		xboxDriveX = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_X);
+
+		xboxDriveY = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_Y);
+
+		xboxDriveLB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_LB);
+
+		xboxDriveRB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_RB);
+
+		xboxDriveStart = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_BS);
+
+		xboxDriveA = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_A);
+
+		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);		
+		
+	}
+	
+	// Custom user defined methods should go here
+	
+	// Drivetrain Tank Drive Left 
+	public double getLeftXboxJoystickValue() {
+		double leftAxis;
+		leftAxis = xboxDrive.getY(Hand.kLeft);
+		// Allow for up to 10% of joystick noise
+		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
+    	return leftAxis;
+	}
+
+	// Drivetrain Tank Drive Right
+	public double getRightXboxJoystickValue() {
+		double rightAxis;
+		rightAxis = xboxDrive.getY(Hand.kRight);
+		// Allow for up to 10% of joystick noise
+		rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
+    	return rightAxis;
+	}
+	
 }
