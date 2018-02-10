@@ -28,8 +28,6 @@ public class DriveTrain extends Subsystem {
 	private DifferentialDrive drive;
 	private DoubleSolenoid driveShifter;
 	private boolean reverseDrive;
-	private Relay gearLights;
-	private Relay intakeLights;
 	private PigeonIMU gyro; 
 	private PigeonIMU.GeneralStatus gyroStatus; 
 	private double [] gyroYPR; 
@@ -114,9 +112,6 @@ public class DriveTrain extends Subsystem {
 		gyro = new PigeonIMU(leftFront);
 		gyroStatus = new PigeonIMU.GeneralStatus();
 		gyroYPR = new double[3];
-		
-		gearLights = new Relay(0);
-		intakeLights = new Relay(1);
 	
 	}
 	
@@ -162,16 +157,6 @@ public class DriveTrain extends Subsystem {
     	}
 //    	SmartDashboard.putNumber("leftRear", leftSpeed);
 //    	SmartDashboard.putNumber("rightRear", rightSpeed);
-    }
-   
-    public void setLights() {
-    	if(reverseDrive) {
-    		intakeLights.set(Relay.Value.kForward);
-    		gearLights.set(Relay.Value.kReverse);
-    	} else {
-    		gearLights.set(Relay.Value.kForward);
-    		intakeLights.set(Relay.Value.kReverse);
-    	}
     }
     
     public double [] getGyro() {

@@ -76,7 +76,6 @@ public class OI {
 		
 		// Drivers Xbox Controller Bindings
 		xboxDrive = new XboxController(RobotMap.XBOX_DRIVE);	
-		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE);
 		
 		xboxDriveX = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_X);
 

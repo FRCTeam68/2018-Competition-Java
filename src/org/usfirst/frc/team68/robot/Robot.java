@@ -9,26 +9,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
-
-//import org.usfirst.frc.team68.robot.subsystems.Intake;
-
-//import org.usfirst.frc.team68.robot.subsystems.USBCamera;
-//import org.usfirst.frc.team68.robot.subsystems.Vision;
-
 
 public class Robot extends IterativeRobot {
 	
 	public static RobotMap robotMap;
-//	public static USBCamera usbCamera;
-//	public static Compressor compressor;
 	public static DriveTrain driveTrain;
-//	public static Intake intake;
-//	public static Vision vision;
 	public static OI oi;
-	
-
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -43,17 +30,8 @@ public class Robot extends IterativeRobot {
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here
-//		usbCamera = USBCamera.getCamera();
 		
-//		compressor = Compressor.getCompressor();
-		driveTrain = DriveTrain.getDriveTrain();
-//		intake = Intake.getIntake();
-
-//		vision = Vision.getVision();
-		       
-//        chooser.addObject("NONE ", new AutonNone());
-
-//        SmartDashboard.putData("Auto mode", chooser);       
+		driveTrain = DriveTrain.getDriveTrain();   
          
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
