@@ -35,6 +35,8 @@ public class Robot extends IterativeRobot {
          
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
+		compressor = Compressor.getCompressor(); 
+
 
 	}
 
