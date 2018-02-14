@@ -16,7 +16,7 @@ public class Intake extends Subsystem {
 	private VictorSP intakeMotors;
 
     
-    // Declare Class variables here
+    // Declare Class variables her
     private static Intake intake;
     private DigitalInput  limitSwitch;
 

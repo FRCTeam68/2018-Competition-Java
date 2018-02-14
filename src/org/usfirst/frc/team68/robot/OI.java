@@ -99,7 +99,7 @@ public class OI {
 		
 	}
 	
-	// Custom user defined methods should go heraaaaaa
+	// Custom user defined methods should go heraaaaa
 	
 	// Drivetrain Tank Drive Left 
 	public double getLeftXboxJoystickValue() {

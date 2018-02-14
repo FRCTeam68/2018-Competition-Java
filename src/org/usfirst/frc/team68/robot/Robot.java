@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// The RobotMap class should be the first to instantiated
+		// The RobotMap class should be the first to instantiate
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here

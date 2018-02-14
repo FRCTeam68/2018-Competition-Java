@@ -64,7 +64,7 @@ public class RobotMap {
     public static final double INTAKE_SPEED_STOP = 0;
     public static final double INTAKE_SPEED_REVERSE = -1;
     public static final int INTAKE_MOTORS = 0;
-        //need a commment for something I dont know what it is but its a comment
+        //need a commment for something I dontnow what it is but its a comment
     public static final int INTAKE_LIMIT_SWITCH = 1;
     //Xbox manipulator buttons
     public static final int XBOX_MANIPULATE = 1;
