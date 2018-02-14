@@ -99,13 +99,13 @@ public class OI {
 		
 	}
 	
-	// Custom user defined methods should go here
+	// Custom user defined methods should go heraaaaaa
 	
 	// Drivetrain Tank Drive Left 
 	public double getLeftXboxJoystickValue() {
 		double leftAxis;
 		leftAxis = xboxDrive.getY(Hand.kLeft);
-		// Allow for up to 10% of joystick noise
+		// Allow for up to 10% of joystick noises
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
     	return leftAxis;
 	}

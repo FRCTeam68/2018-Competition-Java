@@ -15,7 +15,7 @@ import org.usfirst.frc.team68.robot.Robot;
  */
 public class IntakeWithJoystick extends Command {
 	public IntakeWithJoystick() {
-		// Use requires() here to declare subsystem dependencies
+		// Use requires() here to declare subsystem dependen
 //		requires(Robot.kExampleSubsystem);
 	}
 

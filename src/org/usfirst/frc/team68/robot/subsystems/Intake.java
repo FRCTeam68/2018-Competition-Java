@@ -9,7 +9,6 @@ import org.usfirst.frc.team68.robot.commands.IntakeWithJoystick;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
 public class Intake extends Subsystem {
     
 	private DoubleSolenoid intakeOrientation;
