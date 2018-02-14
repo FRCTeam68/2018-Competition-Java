@@ -57,7 +57,28 @@ public class RobotMap {
 	// Pneumatic Control Module CAN Bus ID
     public static final int PCM_MAIN = 9;
     
+	public static final int INTAKE_CLAMP = 3; 
+	public static final int INTAKE_UNCLAMP = 4;
+	
+    public static final double INTAKE_SPEED_FORWARD = 1;
+    public static final double INTAKE_SPEED_STOP = 0;
+    public static final double INTAKE_SPEED_REVERSE = -1;
+    public static final int INTAKE_MOTORS = 0;
+        
+    public static final int INTAKE_LIMIT_SWITCH = 1;
+    //Xbox manipulator buttons
+    public static final int XBOX_MANIPULATE = 1;
     
+    public static final int XBOX_MANIPULATOR_A = 1;
+    public static final int XBOX_MANIPULATOR_B = 2;
+    public static final int XBOX_MANIPULATOR_X = 3;
+    public static final int XBOX_MANIPULATOR_Y = 4;
+    public static final int XBOX_MANIPULATOR_RB = 5;
+    public static final int XBOX_MANIPULATOR_LB = 6;
+    
+    public static final int XBOX_MANIPULATOR_LT = 2;
+    public static final int XBOX_MANIPULATOR_RT = 3;
+    
+    public static final int XBOX_MANIPULATOR_BB = 7;
+    public static final int XBOX_MANIPULATOR_BS = 8;
 }
-
-

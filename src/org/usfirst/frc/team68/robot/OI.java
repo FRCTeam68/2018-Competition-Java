@@ -57,7 +57,13 @@ public class OI {
 	
 	// Manipulators Xbox Controller
 	private XboxController xboxManipulate;
-	
+	private Button xboxManipulateA;
+	private Button xboxManipulateB;
+	private Button xboxManipulateX;
+	private Button xboxManipulateY;
+	private Button xboxManipulateRB;
+	private Button xboxManipulateLB;
+	private Button xboxManipulateBack;	
 	// Declare class variables here
 	private static OI oi;
 	
