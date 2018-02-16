@@ -6,16 +6,16 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team68.robot.commands;
-//
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team68.robot.Robot;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class IntakeWithJoystick extends Command {
-	public IntakeWithJoystick() {
-		// Use requires() here to declare subsystem dependen
+public class IntakeManualOut extends Command {
+	public IntakeManualOut() {
+		// Use requires() here to declare subsystem dependencies
 //		requires(Robot.kExampleSubsystem);
 	}
 
@@ -41,7 +41,7 @@ public class IntakeWithJoystick extends Command {
 	}
 
 	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to r
+	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
 	}

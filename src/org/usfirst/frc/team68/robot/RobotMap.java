@@ -64,21 +64,12 @@ public class RobotMap {
     public static final double INTAKE_SPEED_STOP = 0;
     public static final double INTAKE_SPEED_REVERSE = -1;
     public static final int INTAKE_MOTORS = 0;
-        //need a commment for something I dontnow what it is but its a comment
+        //need a commment for something I dont now what it is but its a comment
     public static final int INTAKE_LIMIT_SWITCH = 1;
     //Xbox manipulator buttons
     public static final int XBOX_MANIPULATE = 1;
     
-    public static final int XBOX_MANIPULATOR_A = 1;
-    public static final int XBOX_MANIPULATOR_B = 2;
-    public static final int XBOX_MANIPULATOR_X = 3;
-    public static final int XBOX_MANIPULATOR_Y = 4;
-    public static final int XBOX_MANIPULATOR_RB = 5;
-    public static final int XBOX_MANIPULATOR_LB = 6;
-    
-    public static final int XBOX_MANIPULATOR_LT = 2;
-    public static final int XBOX_MANIPULATOR_RT = 3;
-    
-    public static final int XBOX_MANIPULATOR_BB = 7;
-    public static final int XBOX_MANIPULATOR_BS = 8;
+    public static final int XBOX_MANIPULATE_PURPLE = 1;
+    public static final int XBOX_MANIPULATE_RED = 2;
+    public static final int XBOX_MANIPULATE_LT = 2; // THE BOTTOM LEFT GRAY BUTTON
 }

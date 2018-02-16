@@ -1,6 +1,4 @@
-
 package org.usfirst.frc.team68.robot;
-
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,11 +8,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team68.robot.subsystems.Intake;
 
 public class Robot extends IterativeRobot {
 	
 	public static RobotMap robotMap;
 	public static DriveTrain driveTrain;
+	public static Intake intake;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 		// Create a single instance of each Robot subsystem here
 		
 		driveTrain = DriveTrain.getDriveTrain();   
-         
+         intake = Intake.getIntake();
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
 
@@ -126,4 +126,5 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 
-}
+} 
+ 

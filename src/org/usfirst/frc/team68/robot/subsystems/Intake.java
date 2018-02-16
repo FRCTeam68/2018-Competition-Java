@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.VictorSP;
 
 import org.usfirst.frc.team68.robot.RobotMap;
-import org.usfirst.frc.team68.robot.commands.IntakeWithJoystick;
+import org.usfirst.frc.team68.robot.commands.IntakeManualIn;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -18,7 +18,7 @@ public class Intake extends Subsystem {
     
     // Declare Class variables her
     private static Intake intake;
-    private DigitalInput  limitSwitch;
+    private DigitalInput limitSwitch;
 
     
 
@@ -43,7 +43,7 @@ public class Intake extends Subsystem {
     
     public void initDefaultCommand() 
     {
-    	setDefaultCommand(new IntakeWithJoystick());    	
+    	setDefaultCommand(new IntakeManualIn());    	
     }
     
     public void intakeClamp() 

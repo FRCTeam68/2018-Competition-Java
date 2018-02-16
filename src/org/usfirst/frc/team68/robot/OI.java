@@ -59,11 +59,7 @@ public class OI {
 	private XboxController xboxManipulate;
 	private Button xboxManipulateA;
 	private Button xboxManipulateB;
-	private Button xboxManipulateX;
-	private Button xboxManipulateY;
-	private Button xboxManipulateRB;
-	private Button xboxManipulateLB;
-	private Button xboxManipulateBack;	
+	private Button xboxManipulateLT;
 	// Declare class variables here
 	private static OI oi;
 	
@@ -97,6 +93,14 @@ public class OI {
 
 		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);		
 		
+		 // Manipulator GamePad bindings
+		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE);
+		
+		xboxManipulateLT = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LT);
+
+		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_PURPLE);
+		
+		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RED);
 	}
 	
 	// Custom user defined methods should go heraaaaa
@@ -117,6 +121,7 @@ public class OI {
 		// Allow for up to 10% of joystick noise
 		rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
     	return rightAxis;
+    	
 	}
 	
 }
