@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.TimedRobot;
+import org.usfirst.frc.team68.robot.subsystems.Lift;
 
 public class Robot extends IterativeRobot {
 	
 	public static RobotMap robotMap;
 	public static DriveTrain driveTrain;
+	public static Lift lift;
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -32,6 +35,7 @@ public class Robot extends IterativeRobot {
 		// Create a single instance of each Robot subsystem here
 		
 		driveTrain = DriveTrain.getDriveTrain();   
+		lift = Lift.getLift();
          
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
