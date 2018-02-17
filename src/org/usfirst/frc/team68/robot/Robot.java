@@ -1,6 +1,4 @@
-
 package org.usfirst.frc.team68.robot;
-
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team68.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import org.usfirst.frc.team68.robot.subsystems.Lift;
@@ -24,6 +23,7 @@ public class Robot extends IterativeRobot {
 	public static Compressor compressor;
 	public static DriveTrain driveTrain;
 	public static Lift lift;
+	public static Intake intake;
 	public static OI oi;
 	public static NavX navX;
 
@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// The RobotMap class should be the first to be instantiated
+		// The RobotMap class should be the first to instantiate
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here
@@ -44,10 +44,10 @@ public class Robot extends IterativeRobot {
 		navX = new NavX();
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();
-         
+        intake = Intake.getIntake();
+        
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
-
 	}
 
 	/**
@@ -138,4 +138,5 @@ public class Robot extends IterativeRobot {
 	//	LiveWindow.run();
 	}
 
-}
+} 
+ 

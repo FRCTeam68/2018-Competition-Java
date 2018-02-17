@@ -16,11 +16,13 @@ public class RobotMap {
     	}
     	return robotMap;
     }
+
     
     public static final int DRIVETRAIN_LEFT_FRONT = 1;
     public static final int DRIVETRAIN_RIGHT_FRONT = 3;
     public static final int DRIVETRAIN_LEFT_REAR = 2;
     public static final int DRIVETRAIN_RIGHT_REAR = 4;
+
     public static final int DRIVETRAIN_SHIFT_LOW = 1;
     public static final int DRIVETRAIN_SHIFT_HIGH = 0;
     public static final double DRIVETRAIN_AUTON_SPEED = .9;
@@ -76,6 +78,22 @@ public class RobotMap {
 	public static final int XBOX_MANIPULATE_LY = 1;
 	public static final int XBOX_MANIPULATE_LT = 2;
 	public static final int XBOX_MANIPULATE_RT = 3;
+	
+	public static final int INTAKE_UP= 7; 
+	public static final int INTAKE_DOWN = 6;
+	
+    public static final double INTAKE_SPEED_FORWARD = 1;
+    public static final double INTAKE_SPEED_STOP = 0;
+    public static final double INTAKE_SPEED_REVERSE = -1;
+    public static final int INTAKE_MOTORS = 0;
+        //Limit Switch
+    public static final int INTAKE_LIMIT_SWITCH = 1;
 }
+
+
+
+
+    
+    
 
 

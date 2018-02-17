@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team68.robot.commands.*;
 
@@ -62,6 +63,11 @@ public class OI {
 	private Button xboxManipulateX;
 	private Button xboxManipulateY;
 	private Button xboxManipulateRB;
+	private Button xboxManipulateA;
+	private Button xboxManipulateB;
+	private Button xboxManipulateLT;
+	private Button xboxManipulateShare;
+	private Button xboxManipulateOptions;
 	
 	// Declare class variables here
 	private static OI oi;
@@ -106,26 +112,44 @@ public class OI {
 		xboxManipulateY = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_Y);
 		
 		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
+
+		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
+		xboxManipulateA.whileHeld(new IntakeManualOut());
+
+		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
+		xboxManipulateB.whenPressed(new IntakeAuto());
+		
+		xboxManipulateOptions = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_OPTIONS);
+		xboxManipulateOptions.whenPressed(new IntakeUpPosition());
+		
+		xboxManipulateShare = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SHARE);
+		xboxManipulateShare.whenPressed(new IntakeDownPosition());
 	}
 	
 	// Custom user defined methods should go here
 	
+
 	// Drivetrain Tank Drive right 
+
+
+	
+	// Drivetrain Tank Drive Left 
+	public double getLeftXboxJoystickValue() {
+		double leftAxis;
+		leftAxis = xboxDrive.getY(Hand.kLeft);
+		// Allow for up to 10% of joystick noises
+		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
+    	return leftAxis;
+	}
+
+	// Drivetrain Tank Drive Right
 	public double getRightXboxJoystickValue() {
 		double rightAxis;
 		rightAxis = xboxDrive.getY(Hand.kRight);
 		// Allow for up to 10% of joystick noise
 		rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
     	return rightAxis;
-	}
-
-	// Drivetrain Tank Drive left
-	public double getLeftXboxJoystickValue() {
-		double leftAxis;
-		leftAxis = xboxDrive.getY(Hand.kLeft);
-		// Allow for up to 10% of joystick noise
-		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
-    	return leftAxis;
+    	
 	}
 	
 	// Manipulator Joystick for Lift
@@ -134,6 +158,15 @@ public class OI {
 		leftAxis = xboxManipulate.getY(Hand.kLeft)/2;
 		//leftAxis = xboxManipulate.getRawAxis(1)/2;
 		SmartDashboard.putNumber("OISpeed", leftAxis);
+		// Allow for up to 10% of joystick noise
+		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
+    	return leftAxis;
+	}
+	
+	//Intake In
+	public double getXboxManipulateLT() {
+		double leftAxis;
+		leftAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_LT);
 		// Allow for up to 10% of joystick noise
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
     	return leftAxis;
