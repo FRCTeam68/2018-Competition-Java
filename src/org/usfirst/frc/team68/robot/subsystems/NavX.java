@@ -71,4 +71,11 @@ public class NavX implements PIDOutput { //this class controls the PID for the n
 		return navX.getRoll();
 	}
 	
+	public double getAngle() {
+		return navX.getAngle();
+	}
+	
+	public boolean gyroActiveCheck() {
+		return navX.isConnected();
+	}
 }
