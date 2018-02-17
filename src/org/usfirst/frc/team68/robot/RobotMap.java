@@ -17,10 +17,10 @@ public class RobotMap {
     	return robotMap;
     }
     
-    public static final int DRIVETRAIN_LEFT_FRONT = 3;
-    public static final int DRIVETRAIN_RIGHT_FRONT = 1;
-    public static final int DRIVETRAIN_LEFT_REAR = 4;
-    public static final int DRIVETRAIN_RIGHT_REAR = 2;
+    public static final int DRIVETRAIN_LEFT_FRONT = 1;
+    public static final int DRIVETRAIN_RIGHT_FRONT = 3;
+    public static final int DRIVETRAIN_LEFT_REAR = 2;
+    public static final int DRIVETRAIN_RIGHT_REAR = 4;
     public static final int DRIVETRAIN_SHIFT_LOW = 1;
     public static final int DRIVETRAIN_SHIFT_HIGH = 0;
     public static final double DRIVETRAIN_AUTON_SPEED = .9;
@@ -43,8 +43,8 @@ public class RobotMap {
     
     public static final int XBOX_DRIVE_A = 1;
     public static final int XBOX_DRIVE_B = 2;
-    public static final int XBOX_DRIVE_X = 3;
-    public static final int XBOX_DRIVE_Y = 4;
+    public static final int XBOX_DRIVE_Y = 3;
+    public static final int XBOX_DRIVE_X = 4;
     public static final int XBOX_DRIVE_LY = 1;			// left joystick
     public static final int XBOX_DRIVE_LT = 2;
     public static final int XBOX_DRIVE_RT = 3;

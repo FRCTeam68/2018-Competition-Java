@@ -10,8 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import org.usfirst.frc.team68.robot.subsystems.Lift;
+
+import org.usfirst.frc.team68.robot.subsystems.NavX;
+
 
 public class Robot extends IterativeRobot {
 	
@@ -19,6 +23,7 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static Lift lift;
 	public static OI oi;
+	public static NavX navX;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -33,13 +38,12 @@ public class Robot extends IterativeRobot {
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here
-		
+		navX = new NavX();
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();
          
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
-
 	}
 
 	/**
@@ -72,7 +76,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		Robot.driveTrain.zeroEncoders();
-		Robot.driveTrain.setShifterLow();
+		//Robot.driveTrain.setShifterLow();
 
 		autonomousCommand = chooser.getSelected();
 
@@ -102,7 +106,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		Robot.driveTrain.setModePercentVbus();
-    	Robot.driveTrain.setShifterLow();
+//    	Robot.driveTrain.setShifterLow();
     	Robot.driveTrain.zeroEncoders();
 
 		// This makes sure that the autonomous stops running when
@@ -127,7 +131,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+	//	LiveWindow.run();
 	}
 
 }
