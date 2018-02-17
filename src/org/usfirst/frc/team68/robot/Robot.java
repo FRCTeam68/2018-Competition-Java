@@ -6,16 +6,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team68.robot.subsystems.Intake;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import org.usfirst.frc.team68.robot.subsystems.Lift;
-
 import org.usfirst.frc.team68.robot.subsystems.NavX;
-
+import org.usfirst.frc.team68.robot.subsystems.EndGame;
 
 public class Robot extends IterativeRobot {
 	
@@ -26,6 +23,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static OI oi;
 	public static NavX navX;
+	public static EndGame endGame;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -45,6 +43,7 @@ public class Robot extends IterativeRobot {
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();
         intake = Intake.getIntake();
+		endGame = EndGame.getEndGame();	
         
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
