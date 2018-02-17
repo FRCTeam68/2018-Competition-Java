@@ -3,6 +3,7 @@ package org.usfirst.frc.team68.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team68.robot.commands.*;
 
@@ -60,6 +61,8 @@ public class OI {
 	private Button xboxManipulateA;
 	private Button xboxManipulateB;
 	private Button xboxManipulateLT;
+	private Button xboxManipulateShare;
+	private Button xboxManipulateOptions;
 	// Declare class variables here
 	private static OI oi;
 	
@@ -95,15 +98,30 @@ public class OI {
 		
 		 // Manipulator GamePad bindings
 		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE);
-		
-		xboxManipulateLT = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LT);
 
 		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_PURPLE);
-		
+		xboxManipulateA.whileHeld(new IntakeManualOut());
+
 		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RED);
+		xboxManipulateB.whenPressed(new IntakeAuto());
+		
+		xboxManipulateOptions = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_OPTIONS);
+		xboxManipulateOptions.whenPressed(new IntakeUpPosition());
+		
+		xboxManipulateShare = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SHARE);
+		xboxManipulateShare.whenPressed(new IntakeDownPosition());
 	}
 	
-	// Custom user defined methods should go heraaaaa
+	// Custom user defined methods should go here
+	
+	//Intake In
+	public double getXboxManipulateLT() {
+		double leftAxis;
+		leftAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_LT);
+		// Allow for up to 10% of joystick noise
+		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
+    	return leftAxis;
+	}
 	
 	// Drivetrain Tank Drive Left 
 	public double getLeftXboxJoystickValue() {

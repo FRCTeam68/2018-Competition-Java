@@ -1,38 +1,38 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team68.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team68.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team68.robot.RobotMap;
 /**
- * An example command.  You can replace me with your own command.
+ *
  */
 public class IntakeManualOut extends Command {
+	
+	boolean isFinished = false;
+	
 	public IntakeManualOut() {
 		// Use requires() here to declare subsystem dependencies
-//		requires(Robot.kExampleSubsystem);
+		requires(Robot.intake);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_REVERSE);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return isFinished;
 	}
 
 	// Called once after isFinished returns true
@@ -44,5 +44,6 @@ public class IntakeManualOut extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP);
 	}
 }
