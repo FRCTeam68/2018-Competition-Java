@@ -67,4 +67,8 @@ public class NavX implements PIDOutput { //this class controls the PID for the n
         return collisionDetected;
 	}
 	
+	public double getRoll() {
+		return navX.getRoll();
+	}
+	
 }

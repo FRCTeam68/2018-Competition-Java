@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team68.robot.subsystems.NavX;
 
 public class Robot extends IterativeRobot {
 	
 	public static RobotMap robotMap;
 	public static DriveTrain driveTrain;
 	public static OI oi;
+	public static NavX navX;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -35,7 +37,7 @@ public class Robot extends IterativeRobot {
          
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
-
+		navX = new NavX();
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		Robot.driveTrain.zeroEncoders();
-		Robot.driveTrain.setShifterLow();
+		//Robot.driveTrain.setShifterLow();
 
 		autonomousCommand = chooser.getSelected();
 
@@ -98,7 +100,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		Robot.driveTrain.setModePercentVbus();
-    	Robot.driveTrain.setShifterLow();
+//    	Robot.driveTrain.setShifterLow();
     	Robot.driveTrain.zeroEncoders();
 
 		// This makes sure that the autonomous stops running when

@@ -26,18 +26,14 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX leftRear;
 	private WPI_TalonSRX rightRear;
 	private DifferentialDrive drive;
-	private DoubleSolenoid driveShifter;
+	//private DoubleSolenoid driveShifter;
 	private boolean reverseDrive;
-	private PigeonIMU gyro; 
-	private PigeonIMU.GeneralStatus gyroStatus; 
-	private double [] gyroYPR; 
 	private double leftRearCruiseVelocity; 
 	private double leftRearAcceleration; 
 	private double rightRearCruiseVelocity; 
 	private double rightRearAcceleration; 
 	private double leftRearSetPoint; 
-	private double rightRearSetPoint; 
-	
+	private double rightRearSetPoint; 	
 	private double targetSpeedLeft;
 	private double targetSpeedRight;
 	StringBuilder reportPIDLeft = new StringBuilder();
@@ -105,14 +101,10 @@ public class DriveTrain extends Subsystem {
 		// robot front = gear. 
 		reverseDrive = false;  // note that pushing forward on the joystick returns negative values
 	
-		driveShifter = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.DRIVETRAIN_SHIFT_HIGH, RobotMap.DRIVETRAIN_SHIFT_LOW);
+		//driveShifter = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.DRIVETRAIN_SHIFT_HIGH, RobotMap.DRIVETRAIN_SHIFT_LOW);
 		// Start in low gear
 //		this.setShifterLow();
 		
-		gyro = new PigeonIMU(leftFront);
-		gyroStatus = new PigeonIMU.GeneralStatus();
-		gyroYPR = new double[3];
-	
 	}
 	
 	public void initDefaultCommand() {
@@ -123,7 +115,7 @@ public class DriveTrain extends Subsystem {
     	return reverseDrive;
     }
     
-    public void setShifterHigh() {
+/*    public void setShifterHigh() {
     	driveShifter.set(Value.kForward);
     	//SmartDashboard.putBoolean("High Gear", true);
     }
@@ -132,7 +124,7 @@ public class DriveTrain extends Subsystem {
     	driveShifter.set(Value.kReverse);
     	//SmartDashboard.putBoolean("High Gear", false);
     }
-    
+    */
     public void setDriveOrientation() {
     	// Reverse the current drive orientation
     	reverseDrive = !reverseDrive;
@@ -141,14 +133,15 @@ public class DriveTrain extends Subsystem {
     }
     
     public void zeroEncoders(){
+		Robot.navX.navX.zeroYaw();
     	leftRear.setSelectedSensorPosition(0,0,0);
     	rightRear.setSelectedSensorPosition(0,0,0);
     }
 
-    public DoubleSolenoid.Value getShifter() {
+    /*public DoubleSolenoid.Value getShifter() {
     	return driveShifter.get();
     }
-
+*/
     public void tankDrive(double leftSpeed, double rightSpeed) {
     	if(reverseDrive){
     		drive.tankDrive(-1*rightSpeed, -1*leftSpeed, true);
@@ -158,27 +151,7 @@ public class DriveTrain extends Subsystem {
 //    	SmartDashboard.putNumber("leftRear", leftSpeed);
 //    	SmartDashboard.putNumber("rightRear", rightSpeed);
     }
-    
-    public double [] getGyro() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR;
-    }
-    
-    public double getGyroYaw() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[0];
-    }
-    
-    public double getGyroPitch() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[1];
-    }
-    
-    public double getGyroRoll() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[2];
-    }
-    
+        
     public void setModePercentVbus () {
     	leftRear.set(ControlMode.PercentOutput,0);
 //    	leftRear.set(0);  Do we need this with the second parameter of the control mode setting?  Test it out?
@@ -288,6 +261,10 @@ public class DriveTrain extends Subsystem {
     
     public double getDriveRightSpeed() {
     	return rightRear.getActiveTrajectoryVelocity();
+    }
+    
+    public double getDriveRightSpeed2() {
+    	return rightRear.getSelectedSensorVelocity(0);
     }
  
     public String getPIDReportLeft() {
