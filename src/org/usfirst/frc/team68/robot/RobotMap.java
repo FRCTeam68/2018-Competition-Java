@@ -57,7 +57,7 @@ public class RobotMap {
 	// Pneumatic Control Module CAN Bus ID
     public static final int PCM_MAIN = 9;
     
-	public static final int LIFT_MOTORS = 1;
+	public static final int LIFT_MOTORS = 5;
 	public static final double LIFT_SPEED_UP = 1.0;
 	public static final double  LIFT_SPEED_STOP = 0;
 	public static final double LIFT_SPEED_DOWN = -1.0;

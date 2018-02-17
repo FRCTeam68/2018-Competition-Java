@@ -3,6 +3,7 @@ package org.usfirst.frc.team68.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.commands.*;
 
@@ -130,7 +131,9 @@ public class OI {
 	// Manipulator Joystick for Lift
 	public double getLeftXboxManipulatorJoystick() {
 		double leftAxis;
-		leftAxis = xboxManipulate.getY(Hand.kLeft);
+		leftAxis = xboxManipulate.getY(Hand.kLeft)/2;
+		//leftAxis = xboxManipulate.getRawAxis(1)/2;
+		SmartDashboard.putNumber("OISpeed", leftAxis);
 		// Allow for up to 10% of joystick noise
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
     	return leftAxis;
