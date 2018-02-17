@@ -37,6 +37,24 @@ public class RobotMap {
     public static final double DRIVETRAIN_RIGHT_PID_P = 1.0;
     public static final double DRIVETRAIN_RIGHT_PID_I = 0.0;
     public static final double DRIVETRAIN_RIGHT_PID_D = 10.0;
+    
+    
+    public static int HOOK_MOTOR_1 = 1;
+    public static int HOOK_MOTOR_2 = 2;
+	public static int RAMP_MOTOR_1 = 6;
+	public static int RAMP_MOTOR_2 = 7;
+	
+	public static final double HOOK_MOTOR_1_FORWARDS = -1.0;
+	public static final double HOOK_MOTOR_1_BACKWARDS = 1.0;
+	public static final double HOOK_MOTOR_1_STOP = 0.0;
+	public static final double HOOK_MOTOR_1_PITSPEED_FORWARDS = -0.1;
+	public static final double HOOK_MOTOR_1_PITSPEED_BACKWARDS = 0.1;
+	
+	
+	public static final double RAMP_MOTOR_1_FORWARDS = -1.0;
+	public static final double RAMP_MOTOR_1_BACKWARDS = 1.0;
+	public static final double RAMP_MOTOR_1_STOP = 0.0;
+    
 
     
     public static final int XBOX_DRIVE = 0;

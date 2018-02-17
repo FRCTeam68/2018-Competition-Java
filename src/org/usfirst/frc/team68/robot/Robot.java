@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team68.robot.subsystems.EndGame;
 
 public class Robot extends IterativeRobot {
 	
 	public static RobotMap robotMap;
 	public static DriveTrain driveTrain;
 	public static OI oi;
+	public static EndGame endGame;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -28,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// The RobotMap class should be the first to be instantiated
 		robotMap = RobotMap.getRobotMap();
+		endGame = EndGame.getEndGame();	
 
 		// Create a single instance of each Robot subsystem here
 		
