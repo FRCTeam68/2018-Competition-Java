@@ -26,7 +26,7 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX leftRear;
 	private WPI_TalonSRX rightRear;
 	private DifferentialDrive drive;
-	//private DoubleSolenoid driveShifter;
+	private DoubleSolenoid driveShifter;
 	private boolean reverseDrive;
 	private double leftRearCruiseVelocity; 
 	private double leftRearAcceleration; 
@@ -101,9 +101,9 @@ public class DriveTrain extends Subsystem {
 		// robot front = gear. 
 		reverseDrive = false;  // note that pushing forward on the joystick returns negative values
 	
-		//driveShifter = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.DRIVETRAIN_SHIFT_HIGH, RobotMap.DRIVETRAIN_SHIFT_LOW);
+		driveShifter = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.DRIVETRAIN_SHIFT_HIGH, RobotMap.DRIVETRAIN_SHIFT_LOW);
 		// Start in low gear
-//		this.setShifterLow();
+		this.setShifterLow();
 		
 	}
 	
@@ -115,7 +115,7 @@ public class DriveTrain extends Subsystem {
     	return reverseDrive;
     }
     
-/*    public void setShifterHigh() {
+    public void setShifterHigh() {
     	driveShifter.set(Value.kForward);
     	//SmartDashboard.putBoolean("High Gear", true);
     }
@@ -124,7 +124,7 @@ public class DriveTrain extends Subsystem {
     	driveShifter.set(Value.kReverse);
     	//SmartDashboard.putBoolean("High Gear", false);
     }
-    */
+    
     public void setDriveOrientation() {
     	// Reverse the current drive orientation
     	reverseDrive = !reverseDrive;
@@ -138,10 +138,10 @@ public class DriveTrain extends Subsystem {
     	rightRear.setSelectedSensorPosition(0,0,0);
     }
 
-    /*public DoubleSolenoid.Value getShifter() {
+    public DoubleSolenoid.Value getShifter() {
     	return driveShifter.get();
     }
-*/
+
     public void tankDrive(double leftSpeed, double rightSpeed) {
     	if(reverseDrive){
     		drive.tankDrive(-1*rightSpeed, -1*leftSpeed, true);

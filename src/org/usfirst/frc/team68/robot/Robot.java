@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		Robot.driveTrain.zeroEncoders();
-		//Robot.driveTrain.setShifterLow();
+		Robot.driveTrain.setShifterLow();
 
 		autonomousCommand = chooser.getSelected();
 
@@ -109,7 +109,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		Robot.driveTrain.setModePercentVbus();
-//    	Robot.driveTrain.setShifterLow();
+    	Robot.driveTrain.setShifterLow();
     	Robot.driveTrain.zeroEncoders();
 
 		// This makes sure that the autonomous stops running when

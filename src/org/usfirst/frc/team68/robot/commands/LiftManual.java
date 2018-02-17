@@ -15,8 +15,8 @@ import org.usfirst.frc.team68.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class ManualLift extends Command {
-	public ManualLift() {
+public class LiftManual extends Command {
+	public LiftManual() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.lift);
 	}

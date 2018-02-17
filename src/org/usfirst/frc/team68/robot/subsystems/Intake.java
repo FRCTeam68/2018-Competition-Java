@@ -20,7 +20,7 @@ public class Intake extends Subsystem {
     // Declare Class variables her
     private static Intake intake;
     private DigitalInput limitSwitch;
-    Counter counter = new Counter(limitSwitch);
+    private Counter counter;
     
 
     
@@ -38,6 +38,7 @@ public class Intake extends Subsystem {
     	intakeOrientation = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_UP, RobotMap.INTAKE_DOWN); 
     	intakeMotors = new VictorSP(RobotMap.INTAKE_MOTORS);
 		limitSwitch = new DigitalInput(RobotMap.INTAKE_LIMIT_SWITCH);
+		counter = new Counter(limitSwitch);
 
     }
     

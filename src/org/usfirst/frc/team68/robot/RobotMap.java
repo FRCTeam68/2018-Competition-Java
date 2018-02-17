@@ -16,48 +16,6 @@ public class RobotMap {
     	}
     	return robotMap;
     }
-
-    
-    public static final int DRIVETRAIN_LEFT_FRONT = 1;
-    public static final int DRIVETRAIN_RIGHT_FRONT = 3;
-    public static final int DRIVETRAIN_LEFT_REAR = 2;
-    public static final int DRIVETRAIN_RIGHT_REAR = 4;
-
-    public static final int DRIVETRAIN_SHIFT_LOW = 1;
-    public static final int DRIVETRAIN_SHIFT_HIGH = 0;
-    public static final double DRIVETRAIN_AUTON_SPEED = .9;
-//    public static final int DRIVETRAIN_GYRO_ID = 3;
-    // Drivetrain Left PID Config
-    public static final int DRIVETRAIN_LEFT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_LEFT_PID_F = 0.498;
-    public static final double DRIVETRAIN_LEFT_PID_P = 1;
-    public static final double DRIVETRAIN_LEFT_PID_I = 0.0;
-    public static final double DRIVETRAIN_LEFT_PID_D = 10.0;
-    // Drivetrain Right PID Config
-    public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_RIGHT_PID_F = 0.507;
-    public static final double DRIVETRAIN_RIGHT_PID_P = 1.0;
-    public static final double DRIVETRAIN_RIGHT_PID_I = 0.0;
-    public static final double DRIVETRAIN_RIGHT_PID_D = 10.0;
-    
-    
-    public static int HOOK_MOTOR_1 = 1;
-    public static int HOOK_MOTOR_2 = 2;
-	public static int RAMP_MOTOR_1 = 6;
-	public static int RAMP_MOTOR_2 = 7;
-	
-	public static final double HOOK_MOTOR_1_FORWARDS = -1.0;
-	public static final double HOOK_MOTOR_1_BACKWARDS = 1.0;
-	public static final double HOOK_MOTOR_1_STOP = 0.0;
-	public static final double HOOK_MOTOR_1_PITSPEED_FORWARDS = -0.1;
-	public static final double HOOK_MOTOR_1_PITSPEED_BACKWARDS = 0.1;
-	
-	
-	public static final double RAMP_MOTOR_1_FORWARDS = -1.0;
-	public static final double RAMP_MOTOR_1_BACKWARDS = 1.0;
-	public static final double RAMP_MOTOR_1_STOP = 0.0;
-    
-
     
     public static final int XBOX_DRIVE = 0;
     
@@ -74,14 +32,6 @@ public class RobotMap {
     public static final int XBOX_DRIVE_RB = 6;
     public static final int XBOX_DRIVE_LB = 5;
     
-	// Pneumatic Control Module CAN Bus ID
-    public static final int PCM_MAIN = 9;
-    
-	public static final int LIFT_MOTORS = 5;
-	public static final double LIFT_SPEED_UP = 1.0;
-	public static final double  LIFT_SPEED_STOP = 0;
-	public static final double LIFT_SPEED_DOWN = -1.0;
-	
 	public static final int XBOX_MANIPULATE = 1;
 	public static final int XBOX_MANIPULATE_A = 1;
 	public static final int XBOX_MANIPULATE_B = 2;
@@ -96,16 +46,72 @@ public class RobotMap {
 	public static final int XBOX_MANIPULATE_LY = 1;
 	public static final int XBOX_MANIPULATE_LT = 2;
 	public static final int XBOX_MANIPULATE_RT = 3;
+
+    // DRIVETRAIN
+    public static final int DRIVETRAIN_LEFT_FRONT = 1;
+    public static final int DRIVETRAIN_RIGHT_FRONT = 3;
+    public static final int DRIVETRAIN_LEFT_REAR = 2;
+    public static final int DRIVETRAIN_RIGHT_REAR = 4;
+
+    public static final int DRIVETRAIN_SHIFT_LOW = 1;
+    public static final int DRIVETRAIN_SHIFT_HIGH = 0;
+    public static final double DRIVETRAIN_AUTON_SPEED = .9;
+    //    public static final int DRIVETRAIN_GYRO_ID = 3;
+    // Drivetrain Left PID Config
+    public static final int DRIVETRAIN_LEFT_PID_SLOT = 0;
+    public static final double DRIVETRAIN_LEFT_PID_F = 0.498;
+    public static final double DRIVETRAIN_LEFT_PID_P = 1;
+    public static final double DRIVETRAIN_LEFT_PID_I = 0.0;
+    public static final double DRIVETRAIN_LEFT_PID_D = 10.0;
+    // Drivetrain Right PID Config
+    public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
+    public static final double DRIVETRAIN_RIGHT_PID_F = 0.507;
+    public static final double DRIVETRAIN_RIGHT_PID_P = 1.0;
+    public static final double DRIVETRAIN_RIGHT_PID_I = 0.0;
+    public static final double DRIVETRAIN_RIGHT_PID_D = 10.0;
+    
+    // ENDGAME
+    public static final int HOOK_MOTOR_1 = 1;
+    public static final int HOOK_MOTOR_2 = 2;
+	public static final int RAMP_MOTOR_1 = 6;
+	public static final int RAMP_MOTOR_2 = 7;
 	
-	public static final int INTAKE_UP= 7; 
+	public static final double HOOK_MOTOR_1_FORWARDS = -1.0;
+	public static final double HOOK_MOTOR_1_BACKWARDS = 1.0;
+	public static final double HOOK_MOTOR_1_STOP = 0.0;
+	public static final double HOOK_MOTOR_1_PITSPEED_FORWARDS = -0.1;
+	public static final double HOOK_MOTOR_1_PITSPEED_BACKWARDS = 0.1;
+	
+	public static final double RAMP_MOTOR_1_FORWARDS = -1.0;
+	public static final double RAMP_MOTOR_1_BACKWARDS = 1.0;
+	public static final double RAMP_MOTOR_1_STOP = 0.0;
+    
+    // LIFT
+	public static final int LIFT_MOTORS = 5;
+	public static final double LIFT_SPEED_UP = 1.0;
+	public static final double  LIFT_SPEED_STOP = 0;
+	public static final double LIFT_SPEED_DOWN = -1.0;
+	public static final int LIFT_LIMIT_SWITCH_UP = 2;
+	public static final int LIFT_LIMIT_SWITCH_DOWN = 3;
+    public static final int LIFT_PID_SLOT = 0;
+    
+    public static final double LIFT_PID_F = 0.0;
+    public static final double LIFT_PID_P = 0.0;
+    public static final double LIFT_PID_I = 0.0;
+    public static final double LIFT_PID_D = 0.0;
+
+	// INTAKE
+	public static final int INTAKE_UP = 7; 
 	public static final int INTAKE_DOWN = 6;
 	
+    public static final int INTAKE_MOTORS = 0;
     public static final double INTAKE_SPEED_FORWARD = 1;
     public static final double INTAKE_SPEED_STOP = 0;
     public static final double INTAKE_SPEED_REVERSE = -1;
-    public static final int INTAKE_MOTORS = 0;
-        //Limit Switch
     public static final int INTAKE_LIMIT_SWITCH = 1;
+    
+	// Pneumatic Control Module CAN Bus ID
+    public static final int PCM_MAIN = 9;
 }
 
 
