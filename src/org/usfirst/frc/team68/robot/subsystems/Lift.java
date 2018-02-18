@@ -67,7 +67,7 @@ public class Lift extends Subsystem {
     		speed = 0;
     	}
 */
-		liftMotor.set(speed/2);
+		liftMotor.set(speed);
 	}
 	public void setControlModePercentOutput() {
 		liftMotor.set(ControlMode.PercentOutput, 0);

@@ -125,7 +125,7 @@ public class OI {
 	// Manipulator Joystick for Lift
 	public double getLeftXboxManipulatorJoystick() {
 		double leftAxis;
-		leftAxis = xboxManipulate.getY(Hand.kLeft)/2;
+		leftAxis = xboxManipulate.getY(Hand.kLeft);
 		SmartDashboard.putNumber("OISpeed", leftAxis);
 		// Allow for up to 10% of joystick noise
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
