@@ -16,9 +16,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
 	// Driver's Xbox Controller
-	
-	
 	private XboxController xboxDrive;
 	private Button xboxDriveA;
 	private Button xboxDriveB;
@@ -28,9 +27,6 @@ public class OI {
 	private Button xboxDriveLB;
 	private Button xboxDriveBack;
 	private Button xboxDriveStart;
-	
-	
-	
 	
 	private XboxController xboxManipulate;
 	private Button xboxManipulateLB;
@@ -71,8 +67,10 @@ public class OI {
 		xboxDriveB.whenPressed(new ExtendHooks());		
 		
 		xboxDriveLB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_LB);
-
+		xboxDriveLB.whenPressed(new DriveShiftLow());
+		
 		xboxDriveRB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_RB);
+		xboxDriveRB.whenPressed(new DriveShiftHigh());
 
 		xboxDriveStart = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_BS);
 
@@ -89,10 +87,10 @@ public class OI {
 		
 		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
 
-		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
+		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
 		xboxManipulateA.whileHeld(new IntakeManualOut());
 
-		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
+		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
 		xboxManipulateB.whenPressed(new IntakeAuto());
 		
 		xboxManipulateOptions = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_OPTIONS);
@@ -104,11 +102,6 @@ public class OI {
 	}
 	
 	// Custom user defined methods should go here
-	
-
-	// Drivetrain Tank Drive right 
-
-
 	
 	// Drivetrain Tank Drive Left 
 	public double getLeftXboxJoystickValue() {

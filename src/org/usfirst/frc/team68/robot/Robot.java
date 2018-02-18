@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here
-		compressor = Compressor.getCompressor();
+//		compressor = Compressor.getCompressor();
 		navX = new NavX();
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();

@@ -101,8 +101,8 @@ public class RobotMap {
     public static final double LIFT_PID_D = 0.0;
 
 	// INTAKE
-	public static final int INTAKE_UP = 7; 
-	public static final int INTAKE_DOWN = 6;
+	public static final int INTAKE_UP = 4; 
+	public static final int INTAKE_DOWN = 5;
 	
     public static final int INTAKE_MOTORS = 0;
     public static final double INTAKE_SPEED_FORWARD = 1;

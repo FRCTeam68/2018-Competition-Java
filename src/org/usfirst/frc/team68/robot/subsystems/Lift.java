@@ -52,8 +52,7 @@ public class Lift extends Subsystem {
 		
 		limitSwitchUp = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_UP);
 		limitSwitchDown = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_DOWN);
-		counterUp = new Counter(limitSwitchUp);
-		counterDown = new Counter(limitSwitchDown);
+
 	}
 
 	@Override
@@ -64,7 +63,14 @@ public class Lift extends Subsystem {
 	}
 	public void setLiftSpeed(double speed) {
 		SmartDashboard.putNumber("LiftSpeed", speed);
-		liftMotor.set(speed);
+/*    	if(this.getSwitchUp() || this.getSwitchDown()) {
+    		speed = 0;
+    	}
+*/
+		liftMotor.set(speed/2);
+	}
+	public void setControlModePercentOutput() {
+		liftMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setPosition(double position) {
@@ -81,20 +87,12 @@ public class Lift extends Subsystem {
 		liftMotor.setSelectedSensorPosition(0, 0, 10);
 	}
 	
-    public boolean isUpSwitchSet() {
-        return counterUp.get() > 0;
-    }
-
-    public void initializeCounterUp() {
-        counterUp.reset();
+    public boolean getSwitchUp() {
+        return limitSwitchUp.get();
     }
     
-    public boolean isDownSwitchSet() {
-        return counterDown.get() > 0;
-    }
-
-    public void initializeCounterDown() {
-        counterDown.reset();
+    public boolean getSwitchDown() {
+        return limitSwitchDown.get();
     }
 	
 }
