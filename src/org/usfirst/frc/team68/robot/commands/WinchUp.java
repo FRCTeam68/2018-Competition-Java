@@ -5,12 +5,12 @@ import org.usfirst.frc.team68.robot.RobotMap;
 
 
 
-public class ExtendRamp extends Command 
+public class WinchUp extends Command 
 {
 	boolean isFinished = false;
 
 	
-    public ExtendRamp() 
+    public WinchUp() 
    {
     	requires(Robot.endGame);
     }
@@ -18,14 +18,14 @@ public class ExtendRamp extends Command
     
     protected void initialize() 
     {
-    	
     }
 
     
     protected void execute()
    {
-    	Robot.endGame.setRampSpeed(RobotMap.RAMP_MOTOR_1_FORWARDS);
-    	isFinished = true;
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_1_FORWARDS, RobotMap.WINCH_MOTOR_2_BACKWARDS);
+   
+    	//isFinished = true;
    }
 
    
@@ -37,13 +37,14 @@ public class ExtendRamp extends Command
     
     protected void end() 
    {
-
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP);
     }
 
     
     protected void interrupted() 
     {
 
-     	Robot.endGame.setRampSpeed(RobotMap.RAMP_MOTOR_1_STOP);
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP);
+   	
     }
 }

@@ -21,8 +21,8 @@ public class RobotMap {
     
     public static final int XBOX_DRIVE_A = 1;
     public static final int XBOX_DRIVE_B = 2;
-    public static final int XBOX_DRIVE_Y = 3;
-    public static final int XBOX_DRIVE_X = 4;
+    public static final int XBOX_DRIVE_Y = 4;
+    public static final int XBOX_DRIVE_X = 3;
     public static final int XBOX_DRIVE_LY = 1;			// left joystick
     public static final int XBOX_DRIVE_LT = 2;
     public static final int XBOX_DRIVE_RT = 3;
@@ -71,53 +71,65 @@ public class RobotMap {
     public static final double DRIVETRAIN_RIGHT_PID_D = 10.0;
     
     // ENDGAME
-    public static final int HOOK_MOTOR_1 = 1;
-    public static final int HOOK_MOTOR_2 = 2;
-	public static final int RAMP_MOTOR_1 = 6;
-	public static final int RAMP_MOTOR_2 = 7;
+    public static final int HOOK_MOTOR_1 = 2;
+    public static final int HOOK_MOTOR_2 = 3;
+	public static final int WINCH_MOTOR_1 = 6;
+	public static final int WINCH_MOTOR_2 = 7;
 	
 	public static final double HOOK_MOTOR_1_FORWARDS = -1.0;
 	public static final double HOOK_MOTOR_1_BACKWARDS = 1.0;
+	public static final double HOOK_MOTOR_2_FORWARDS = -1.0;
+	public static final double HOOK_MOTOR_2_BACKWARDS = 1.0;
 	public static final double HOOK_MOTOR_1_STOP = 0.0;
 	public static final double HOOK_MOTOR_1_PITSPEED_FORWARDS = -0.1;
 	public static final double HOOK_MOTOR_1_PITSPEED_BACKWARDS = 0.1;
 	
-	public static final double RAMP_MOTOR_1_FORWARDS = -1.0;
-	public static final double RAMP_MOTOR_1_BACKWARDS = 1.0;
-	public static final double RAMP_MOTOR_1_STOP = 0.0;
+	public static final double WINCH_MOTOR_1_FORWARDS = -1.0;
+	public static final double WINCH_MOTOR_1_BACKWARDS = 1.0;
+	public static final double WINCH_MOTOR_2_FORWARDS = -1.0;
+	public static final double WINCH_MOTOR_2_BACKWARDS = 1.0;
+	
+	public static final double WINCH_MOTOR_STOP = 0.0;
+	
+	public static final int HOOK_LIMIT_SWITCH_A = 1;
+	public static final int HOOK_LIMIT_SWITCH_B = 2;
+
+
     
     // LIFT
 	public static final int LIFT_MOTORS = 5;
-	public static final double LIFT_SPEED_UP = 1.0;
+	public static final double LIFT_SPEED_UP = 0.75;
 	public static final double  LIFT_SPEED_STOP = 0;
-	public static final double LIFT_SPEED_DOWN = -1.0;
-	public static final int LIFT_LIMIT_SWITCH_UP = 2;
+	public static final double LIFT_SPEED_DOWN = -0.75;
+	public static final double LIFT_NORMAL_SCALE = -80096.0;
+	public static final double LIFT_HIGH_SCALE = -94789.0;
+	public static final double LIFT_NORMAL_SWITCH = -24764.0;
+	public static final double LIFT_GROUND = -0.25;
+	
+	//public static final int LIFT_LIMIT_SWITCH_UP = 2;
 	public static final int LIFT_LIMIT_SWITCH_DOWN = 3;
     public static final int LIFT_PID_SLOT = 0;
     
-    public static final double LIFT_PID_F = 0.0;
-    public static final double LIFT_PID_P = 0.0;
+    public static final double LIFT_PID_F = 0.025;
+    public static final double LIFT_PID_P = .4;
     public static final double LIFT_PID_I = 0.0;
     public static final double LIFT_PID_D = 0.0;
 
 	// INTAKE
+    public static final int INTAKE_CLAMP = 3;
+    public static final int INTAKE_NORMAL = 2;
 	public static final int INTAKE_UP = 4; 
 	public static final int INTAKE_DOWN = 5;
 	
-    public static final int INTAKE_MOTORS = 0;
-    public static final double INTAKE_SPEED_FORWARD = 1;
+    public static final int INTAKE_MOTOR_A = 0;
+    public static final int INTAKE_MOTOR_B = 1;
+    public static final double INTAKE_A_SPEED_FORWARD = 1;
+    public static final double INTAKE_A_SPEED_REVERSE = -.45;
+    public static final double INTAKE_B_SPEED_FORWARD = -.9;
+    public static final double INTAKE_B_SPEED_REVERSE = .45;
     public static final double INTAKE_SPEED_STOP = 0;
-    public static final double INTAKE_SPEED_REVERSE = -1;
-    public static final int INTAKE_LIMIT_SWITCH = 1;
+    public static final int INTAKE_LIMIT_SWITCH = 0;
     
 	// Pneumatic Control Module CAN Bus ID
     public static final int PCM_MAIN = 9;
 }
-
-
-
-
-    
-    
-
-

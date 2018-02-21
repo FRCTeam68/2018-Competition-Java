@@ -1,7 +1,10 @@
 package org.usfirst.frc.team68.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.VictorSP;
+
+import org.usfirst.frc.team68.robot.Robot;
 import org.usfirst.frc.team68.robot.RobotMap;
 import org.usfirst.frc.team68.robot.commands.IntakeManualIn;
 import edu.wpi.first.wpilibj.Counter;
@@ -14,8 +17,11 @@ public class Intake extends Subsystem {
     
     // Declare Class variables her
     private static Intake intake;
+    private DoubleSolenoid intakeClamper;
 	private DoubleSolenoid intakeOrientation;
-	private VictorSP intakeMotors;
+	private VictorSP intakeMotorA;
+	private VictorSP intakeMotorB;
+	private Value orientationStatus;
     private DigitalInput limitSwitch;
     
     public static Intake getIntake() {
@@ -29,8 +35,11 @@ public class Intake extends Subsystem {
     private Intake()
     {
     	
-    	intakeOrientation = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_UP, RobotMap.INTAKE_DOWN); 
-    	intakeMotors = new VictorSP(RobotMap.INTAKE_MOTORS);
+    	intakeOrientation = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_UP, RobotMap.INTAKE_DOWN);
+    	orientationStatus = Value.kForward;
+    	intakeClamper = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_CLAMP, RobotMap.INTAKE_NORMAL);
+    	intakeMotorA = new VictorSP(RobotMap.INTAKE_MOTOR_A);
+    	intakeMotorB = new VictorSP(RobotMap.INTAKE_MOTOR_B);
 		limitSwitch = new DigitalInput(RobotMap.INTAKE_LIMIT_SWITCH);
 
     }
@@ -46,28 +55,81 @@ public class Intake extends Subsystem {
     
     public void intakeUpPosition() 
     {
-		intakeOrientation.set(Value.kReverse);
+    	intakeOrientation.set(Value.kForward);
     }
     
     public void intakeDownPosition() 
     {
-    	intakeOrientation.set(Value.kForward);
+    	intakeOrientation.set(Value.kReverse);
     }
         
-    public void setIntakeSpeed(double speed) 
+    public void setIntakeSpeed(double speedA, double speedB) 
     {
     	
-    	if(this.getSwitch()) {
-    		speed = 0;
-    	}
-    	intakeMotors.set(speed);
+    	/*if(this.getSwitch()) {
+    		speedA = 0;
+    		speedB = 0;
+    	}*/
+    	intakeMotorA.set(speedA);
+    	intakeMotorB.set(speedB);
     	
     }
     
-    public double getIntakeSpeed()
+    
+    public double getIntakeASpeed()
     {
-    	return intakeMotors.get();
+    	return intakeMotorA.get();
     }
+    
+    public double getIntakeBSpeed()
+    {
+    	return intakeMotorB.get();
+    }
+    
+    public void intakeClamp() {
+    	intakeClamper.set(Value.kForward);
+    }
+    
+    public void intakeNormal() {
+    	intakeClamper.set(Value.kReverse);
+    }
+    
+    
+    public Value getIntakeStatus() {
+    	return orientationStatus;
+    }
+    
+    public void toggleIntake() {
+    	if(this.getOrientation() == Value.kForward){
+    	  	this.intakeDownPosition();
+    	}
+    	
+    	else {
+    		this.intakeUpPosition();
+    	}
+    }
+    
+    public DoubleSolenoid.Value getOrientation() {
+    	return intakeOrientation.get();
+    }
+    
+    //Clamp Toggle
+    
+    public DoubleSolenoid.Value getClampStatus() {
+    	return intakeClamper.get();
+    }
+    
+    public void toggleClamp() {
+    	if(this.getClampStatus() == Value.kForward){
+    	  	this.intakeNormal();
+    	}
+    	
+    	else {
+    		this.intakeClamp();
+    	}
+    }
+    
     
     
 }
+   

@@ -23,7 +23,7 @@ public class ExtendPitHooks extends Command
     
     protected void execute()
    {
-    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_PITSPEED_FORWARDS);
+    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_PITSPEED_FORWARDS, RobotMap.HOOK_MOTOR_1_PITSPEED_FORWARDS);
     	isFinished = true;
    }
 
@@ -36,6 +36,7 @@ public class ExtendPitHooks extends Command
     
     protected void end() 
    {
+     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
 
     }
 
@@ -43,7 +44,7 @@ public class ExtendPitHooks extends Command
     protected void interrupted() 
     {
 
-     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP);
+     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
 
     }
 }

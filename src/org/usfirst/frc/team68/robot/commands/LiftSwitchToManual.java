@@ -15,8 +15,12 @@ import org.usfirst.frc.team68.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class LiftManual extends Command {
-	public LiftManual() {
+public class LiftSwitchToManual extends Command {
+	
+	private boolean isFinished = false;
+	private double setPoint;
+	
+	public LiftSwitchToManual() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.lift);
 	}
@@ -29,23 +33,29 @@ public class LiftManual extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double speed;
-		speed = Robot.oi.getLeftXboxManipulatorJoystick()/2;
+		if(Robot.lift.getManualStatus() == false) {
+			Robot.lift.swapManual();
+			Robot.lift.setDefaultCommand(new LiftManual());
+			Robot.lift.setControlModePercentOutput(0);
+		}
 		
-		SmartDashboard.putNumber("CommandSpeed", speed);
-		
-		Robot.lift.setLiftSpeed(speed);
+		else if (Robot.lift.getManualStatus() == true) {
+			Robot.lift.swapManual();
+			Robot.lift.setDefaultCommand(null);
+		}
+	isFinished = true;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return isFinished;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+
 	}
 
 	// Called when another command which requires one or more of the same

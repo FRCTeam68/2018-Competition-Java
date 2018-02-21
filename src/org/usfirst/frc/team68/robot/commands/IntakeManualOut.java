@@ -1,7 +1,10 @@
 package org.usfirst.frc.team68.robot.commands;
 
+import java.sql.Time;
+
 import org.usfirst.frc.team68.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team68.robot.RobotMap;
@@ -26,7 +29,10 @@ public class IntakeManualOut extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_REVERSE);
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_A_SPEED_REVERSE, RobotMap.INTAKE_B_SPEED_REVERSE);
+		if (Robot.intake.getSwitch() ){
+			Robot.intake.intakeNormal();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -45,6 +51,6 @@ public class IntakeManualOut extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP);
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP, RobotMap.INTAKE_SPEED_STOP);
 	}
 }

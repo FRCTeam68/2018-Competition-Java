@@ -14,10 +14,10 @@ import org.usfirst.frc.team68.robot.Robot;
 /**
  * An example command.  You can replace me with your own command.
  */
-public class IntakeDownPosition extends Command {
+public class IntakeToggleClamp extends Command {
 			boolean isFinished = false;
 
-		    public IntakeDownPosition() 
+		    public IntakeToggleClamp() 
 		   {
 		    	requires(Robot.intake);
 		    }
@@ -30,7 +30,7 @@ public class IntakeDownPosition extends Command {
 		    protected void execute()
 		   {
 		    	
-		    	Robot.intake.toggleIntake();
+		    	Robot.intake.toggleClamp();
 		    	isFinished = true;
 		    }
 

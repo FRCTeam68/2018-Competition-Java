@@ -23,7 +23,7 @@ public class RetractPitHooks extends Command
     
     protected void execute()
    {
-    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_PITSPEED_BACKWARDS);
+    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_PITSPEED_BACKWARDS, RobotMap.HOOK_MOTOR_1_PITSPEED_BACKWARDS);
    
     	isFinished = true;
    }
@@ -37,6 +37,7 @@ public class RetractPitHooks extends Command
     
     protected void end() 
    {
+     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
 
     }
 
@@ -44,7 +45,7 @@ public class RetractPitHooks extends Command
     protected void interrupted() 
     {
 
-    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP);
+    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
    	
     }
 }

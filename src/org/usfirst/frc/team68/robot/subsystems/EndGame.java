@@ -1,8 +1,12 @@
 package org.usfirst.frc.team68.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;	
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team68.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 
 
@@ -11,9 +15,11 @@ public class EndGame extends Subsystem {
 	
 	private VictorSP hookMotor1;
 	private VictorSP hookMotor2;
-	private WPI_TalonSRX rampMotor1;
-	private WPI_TalonSRX rampMotor2;
-	
+	private WPI_TalonSRX winchMotor1;
+	private WPI_TalonSRX winchMotor2;
+	private DigitalInput limitSwitchA;
+	private DigitalInput limitSwitchB;
+
 	
     private static EndGame endgame;
 
@@ -27,11 +33,14 @@ public class EndGame extends Subsystem {
 	
 	private EndGame()
 	{
-		
 		hookMotor1 = new VictorSP(RobotMap.HOOK_MOTOR_1);	
 		hookMotor2 = new VictorSP(RobotMap.HOOK_MOTOR_2);	
-		rampMotor1 = new WPI_TalonSRX(RobotMap.RAMP_MOTOR_1);
-		rampMotor2 = new WPI_TalonSRX(RobotMap.RAMP_MOTOR_2);
+		winchMotor1 = new WPI_TalonSRX(RobotMap.WINCH_MOTOR_1);
+		winchMotor2 = new WPI_TalonSRX(RobotMap.WINCH_MOTOR_2);
+		limitSwitchA = new DigitalInput(RobotMap.HOOK_LIMIT_SWITCH_A);
+		limitSwitchB = new DigitalInput(RobotMap.HOOK_LIMIT_SWITCH_B);
+		SmartDashboard.putBoolean("LimitSwitchHookA", limitSwitchA.get());
+		SmartDashboard.putBoolean("LimitSwitchHookB", limitSwitchB.get());
 	}
     
     
@@ -42,16 +51,25 @@ public class EndGame extends Subsystem {
 	
 	
 	
-	public void setHookSpeed(double speed)
+	public void setHookSpeed(double speedE, double speedF)
 	{
-			hookMotor1.set(speed);
-			hookMotor2.set(speed);
+			hookMotor1.set(speedE);
+			hookMotor2.set(speedF);
 			
 	}	
 
-	public void setRampSpeed(double speed)
+	public void setWinchSpeed(double speedC, double speedD)
 	{
-			rampMotor1.set(speed);
-			rampMotor2.set(speed);	
+			winchMotor1.set(speedC);
+			winchMotor2.set(speedD);	
 	}
+	
+	public boolean getSwitchA() {
+		return limitSwitchA.get();
+	}
+	
+	public boolean getSwitchB() {
+		return limitSwitchB.get();
+	}
+	
 }

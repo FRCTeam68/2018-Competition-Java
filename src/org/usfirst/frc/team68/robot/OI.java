@@ -38,6 +38,7 @@ public class OI {
 	private Button xboxManipulateLT;
 	private Button xboxManipulateShare;
 	private Button xboxManipulateOptions;
+	private Button xboxManipulateSR;
 	
 	private static OI oi;
 	
@@ -55,16 +56,16 @@ public class OI {
 		xboxDrive = new XboxController(RobotMap.XBOX_DRIVE);	
 		
 		xboxDriveX = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_X);
-		xboxDriveX.whenPressed(new ExtendRamp());
+		xboxDriveX.whileHeld(new WinchUp());
 		
 		xboxDriveY = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_Y);
-		xboxDriveY.whenPressed(new RetractRamp());
+		/*xboxDriveY.whileHeld(new WinchDown());*/
 		
 		xboxDriveA = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_A);
-		xboxDriveA.whenPressed(new RetractHooks());
+		xboxDriveA.whileHeld(new RetractHooks());
 	
 		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
-		xboxDriveB.whenPressed(new ExtendHooks());		
+		xboxDriveB.whileHeld(new ExtendHooks());		
 		
 		xboxDriveLB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_LB);
 		xboxDriveLB.whenPressed(new DriveShiftLow());
@@ -79,26 +80,34 @@ public class OI {
 		// Manipulator Xbox Controller Bindings
 		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE); 
 
+		//Lift Presets
 		xboxManipulateLB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LB);
+		xboxManipulateLB.whenPressed(new LiftZero());
 		
 		xboxManipulateX = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_X);
-		
+		xboxManipulateX.whenPressed(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
+
 		xboxManipulateY = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_Y);
+		xboxManipulateY.whenPressed(new LiftSetPosition(RobotMap.LIFT_NORMAL_SCALE));
 		
 		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
+		xboxManipulateRB.whenPressed(new LiftSetPosition(RobotMap.LIFT_HIGH_SCALE));
 
-		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
-		xboxManipulateA.whileHeld(new IntakeManualOut());
+		//Intake
+		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
+		xboxManipulateB.whileHeld(new IntakeManualOut());
 
-		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
-		xboxManipulateB.whenPressed(new IntakeAuto());
+		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
+		xboxManipulateA.whenPressed(new IntakeAuto());
 		
 		xboxManipulateOptions = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_OPTIONS);
-		xboxManipulateOptions.whenPressed(new IntakeUpPosition());
+		xboxManipulateOptions.whenPressed(new IntakeToggleClamp());
 		
 		xboxManipulateShare = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SHARE);
 		xboxManipulateShare.whenPressed(new IntakeDownPosition());
 
+		xboxManipulateSR = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SR);
+		xboxManipulateSR.whenPressed(new LiftSwitchToManual());
 	}
 	
 	// Custom user defined methods should go here
@@ -136,6 +145,7 @@ public class OI {
 	public double getXboxManipulateLT() {
 		double leftAxis;
 		leftAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_LT);
+		SmartDashboard.putNumber("Manipulator", leftAxis);
 		// Allow for up to 10% of joystick noise
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
     	return leftAxis;

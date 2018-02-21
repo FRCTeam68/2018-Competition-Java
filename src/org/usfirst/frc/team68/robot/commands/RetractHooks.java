@@ -1,5 +1,7 @@
 package org.usfirst.frc.team68.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team68.robot.Robot;
 import org.usfirst.frc.team68.robot.RobotMap;
 
@@ -8,6 +10,8 @@ import org.usfirst.frc.team68.robot.RobotMap;
 public class RetractHooks extends Command 
 {
 	boolean isFinished = false;
+	double speedA = RobotMap.HOOK_MOTOR_1_FORWARDS/3;
+	double speedB = RobotMap.HOOK_MOTOR_2_FORWARDS/3;
 
 	
     public RetractHooks() 
@@ -20,12 +24,29 @@ public class RetractHooks extends Command
     {
     }
 
-    
     protected void execute()
    {
-    	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_BACKWARDS);
-
-    	isFinished = true;
+    	SmartDashboard.putNumber("speedA Retract", speedA);
+    	SmartDashboard.putNumber("speedB Retract", speedB);
+    	if (Robot.endGame.getSwitchA() == false) {
+    		speedA = 0;
+    	}
+    	
+    	else {
+    		speedA = RobotMap.HOOK_MOTOR_1_FORWARDS/3;
+    	}
+    	
+    	if (Robot.endGame.getSwitchB() == false) {
+    		speedB = 0;
+    	}
+    	
+    	else {
+    		speedB = RobotMap.HOOK_MOTOR_2_FORWARDS/3;
+    	}
+    	Robot.endGame.setHookSpeed(speedA, speedB);
+    	
+    	
+    	//isFinished = true;
    }
 
    
@@ -37,6 +58,7 @@ public class RetractHooks extends Command
     
     protected void end() 
    {
+     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
 
     }
 
@@ -44,7 +66,7 @@ public class RetractHooks extends Command
     protected void interrupted() 
     {
 
-     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP);
+     	Robot.endGame.setHookSpeed(RobotMap.HOOK_MOTOR_1_STOP, RobotMap.HOOK_MOTOR_1_STOP);
      	
     }
 }

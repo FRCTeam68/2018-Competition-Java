@@ -26,7 +26,7 @@ public class IntakeManualIn extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.intake.setIntakeSpeed(Robot.oi.getXboxManipulateLT());
+		Robot.intake.setIntakeSpeed(Robot.oi.getXboxManipulateLT(), Robot.oi.getXboxManipulateLT());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -44,6 +44,6 @@ public class IntakeManualIn extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP);
+		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP, RobotMap.INTAKE_SPEED_STOP);
 	}
 }

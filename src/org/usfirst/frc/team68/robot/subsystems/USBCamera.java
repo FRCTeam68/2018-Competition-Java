@@ -16,8 +16,23 @@ public class USBCamera extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
+	private static USBCamera camera;
+
+    
+    public static USBCamera getCamera() {
+    	if (camera == null) {
+    		camera = new USBCamera();
+    	}
+    	return camera;
+    }
+    
+    // Constructor
+    private USBCamera() {
+
+    }
+    
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+    	// setDefaultCommand(new Command() );
+    }
 }

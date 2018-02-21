@@ -12,6 +12,7 @@ import org.usfirst.frc.team68.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.TimedRobot;
 import org.usfirst.frc.team68.robot.subsystems.Lift;
 import org.usfirst.frc.team68.robot.subsystems.NavX;
+import org.usfirst.frc.team68.robot.subsystems.USBCamera;
 import org.usfirst.frc.team68.robot.subsystems.EndGame;
 
 public class Robot extends IterativeRobot {
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static NavX navX;
 	public static EndGame endGame;
+	public static USBCamera camera;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -43,8 +45,8 @@ public class Robot extends IterativeRobot {
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();
         intake = Intake.getIntake();
-		endGame = EndGame.getEndGame();	
-        
+		endGame = EndGame.getEndGame();
+		camera = USBCamera.getCamera();
 		// The OI class should be the last to be instantiated
 		oi = OI.getOI();
 	}
@@ -111,6 +113,11 @@ public class Robot extends IterativeRobot {
 		Robot.driveTrain.setModePercentVbus();
     	Robot.driveTrain.setShifterLow();
     	Robot.driveTrain.zeroEncoders();
+    	if (Robot.lift.getSwitchDown() == false) {
+    		Robot.lift.zeroEncoder();
+    	}
+    	Robot.intake.intakeUpPosition();
+    	Robot.intake.intakeNormal();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -126,7 +133,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
+		SmartDashboard.putNumber("Lift Value Stick", Robot.oi.getXboxManipulateLT());
+		SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
+		SmartDashboard.putBoolean("LiftSwitchDown", Robot.lift.getSwitchDown());
+		SmartDashboard.putBoolean("LiftManual", Robot.lift.getManualStatus());
+
+		if (Robot.lift.getSwitchDown() == false) {
+    		Robot.lift.zeroEncoder();
+    	}
 	}
 
 	/**

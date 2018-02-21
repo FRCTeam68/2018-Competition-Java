@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.Robot;
+import org.usfirst.frc.team68.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class LiftManual extends Command {
-	public LiftManual() {
+public class LiftZero extends Command {
+	public LiftZero() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.lift);
 	}
@@ -29,23 +30,19 @@ public class LiftManual extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double speed;
-		speed = Robot.oi.getLeftXboxManipulatorJoystick()/2;
-		
-		SmartDashboard.putNumber("CommandSpeed", speed);
-		
-		Robot.lift.setLiftSpeed(speed);
+		Robot.lift.setControlModePercentOutput(RobotMap.LIFT_GROUND);		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (Robot.lift.getSwitchDown() == false);
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.lift.setControlModePercentOutput(RobotMap.LIFT_SPEED_STOP);		
 	}
 
 	// Called when another command which requires one or more of the same

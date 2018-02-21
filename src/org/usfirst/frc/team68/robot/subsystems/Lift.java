@@ -6,10 +6,12 @@ import org.usfirst.frc.team68.robot.commands.LiftManual;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,6 +25,7 @@ public class Lift extends Subsystem {
     private DigitalInput limitSwitchDown;
     private Counter counterUp;
     private Counter counterDown;
+	private Boolean manualBool;
 	
 	private static Lift lift;
 	
@@ -37,7 +40,6 @@ public class Lift extends Subsystem {
 	{
 		liftMotor = new WPI_TalonSRX(RobotMap.LIFT_MOTORS);
 		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		
 		liftMotor.setSensorPhase(true); 
 		liftMotor.configNominalOutputForward(0, 0);
 		liftMotor.configNominalOutputReverse(0, 0);
@@ -49,8 +51,10 @@ public class Lift extends Subsystem {
 		liftMotor.config_kP(RobotMap.LIFT_PID_SLOT, RobotMap.LIFT_PID_P, 0);
 		liftMotor.config_kI(RobotMap.LIFT_PID_SLOT, RobotMap.LIFT_PID_I, 0);
 		liftMotor.config_kD(RobotMap.LIFT_PID_SLOT, RobotMap.LIFT_PID_D, 0);
-		
-		limitSwitchUp = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_UP);
+		liftMotor.setNeutralMode(NeutralMode.Brake);
+		liftMotor.set(ControlMode.PercentOutput, 0);;
+		manualBool = true;
+		//limitSwitchUp = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_UP);
 		limitSwitchDown = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_DOWN);
 
 	}
@@ -63,14 +67,13 @@ public class Lift extends Subsystem {
 	}
 	public void setLiftSpeed(double speed) {
 		SmartDashboard.putNumber("LiftSpeed", speed);
-/*    	if(this.getSwitchUp() || this.getSwitchDown()) {
+    	/*if(this.getSwitchUp() || this.getSwitchDown()) {
     		speed = 0;
-    	}
-*/
+    	}*/
 		liftMotor.set(speed);
 	}
-	public void setControlModePercentOutput() {
-		liftMotor.set(ControlMode.PercentOutput, 0);
+	public void setControlModePercentOutput(double speed) {
+		liftMotor.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public void setPosition(double position) {
@@ -86,13 +89,22 @@ public class Lift extends Subsystem {
 	public void zeroEncoder() {
 		liftMotor.setSelectedSensorPosition(0, 0, 10);
 	}
-	
-    public boolean getSwitchUp() {
+	/*
+   public boolean getSwitchUp() {
         return limitSwitchUp.get();
-    }
+    }*/
     
     public boolean getSwitchDown() {
         return limitSwitchDown.get();
     }
 	
+    public void swapManual() {
+    	manualBool = !manualBool;
+    }
+    
+    public boolean getManualStatus() {
+    	return manualBool;
+    }
+    
+    
 }

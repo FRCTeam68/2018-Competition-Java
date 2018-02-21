@@ -5,12 +5,12 @@ import org.usfirst.frc.team68.robot.RobotMap;
 
 
 
-public class RetractRamp extends Command 
+public class WinchDown extends Command 
 {
 	boolean isFinished = false;
 
 	
-    public RetractRamp() 
+    public WinchDown() 
    {
     	requires(Robot.endGame);
     }
@@ -23,7 +23,8 @@ public class RetractRamp extends Command
     
     protected void execute()
    {
-    	Robot.endGame.setRampSpeed(RobotMap.RAMP_MOTOR_1_BACKWARDS);
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_1_FORWARDS, RobotMap.WINCH_MOTOR_2_FORWARDS);
+   
     	isFinished = true;
    }
 
@@ -36,6 +37,7 @@ public class RetractRamp extends Command
     
     protected void end() 
    {
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP);
 
     }
 
@@ -43,7 +45,7 @@ public class RetractRamp extends Command
     protected void interrupted() 
     {
 
-    	Robot.endGame.setRampSpeed(RobotMap.RAMP_MOTOR_1_STOP);
-    	
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP );
+   	
     }
 }
