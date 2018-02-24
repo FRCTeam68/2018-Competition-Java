@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team68.robot.commands.LeftAutoStartCommand;
+import org.usfirst.frc.team68.robot.commands.RightAutoStartCommand;
 import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team68.robot.subsystems.Intake;
@@ -26,9 +29,11 @@ public class Robot extends IterativeRobot {
 	public static NavX navX;
 	public static EndGame endGame;
 	public static USBCamera camera;
+    private LeftAutoStartCommand leftAuto;
+    private RightAutoStartCommand rightAuto;
 
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<Command> autoChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,6 +53,13 @@ public class Robot extends IterativeRobot {
 		endGame = EndGame.getEndGame();
 		camera = USBCamera.getCamera();
 		// The OI class should be the last to be instantiated
+		 autoChooser = new SendableChooser<>();
+	     autoChooser.addObject("Left Start Auto", leftAuto);
+	     autoChooser.addObject("Right Start Auto", rightAuto);
+//	        autoChooser.addObject("Center Start Auto", new CenterAutoStartCommand());
+	     autoChooser.addDefault("Auto-Run", new DriveXInchesCommand(100, 0.8));
+
+	        SmartDashboard.putData("Autonomous", autoChooser);
 		oi = OI.getOI();
 	}
 

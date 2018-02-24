@@ -188,6 +188,14 @@ public class DriveTrain extends Subsystem {
 		return rightRear.getSelectedSensorPosition(0);
 	}
 	
+	public int getPositionLeftPF() {
+		return leftRear.getSelectedSensorPosition(0);
+	}
+	
+	public int getPositionRightPF() {
+		return rightRear.getSelectedSensorPosition(0);
+	}
+	
 	public double getClosedLoopErrorRight () {
 		return rightRear.getClosedLoopError(0);
 	}
