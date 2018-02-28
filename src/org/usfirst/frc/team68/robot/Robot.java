@@ -1,5 +1,6 @@
 package org.usfirst.frc.team68.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -7,8 +8,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team68.robot.commands.LeftAutoStartCommand;
-import org.usfirst.frc.team68.robot.commands.RightAutoStartCommand;
+/*import org.usfirst.frc.team68.robot.auto.LeftAutoStartCommand;
+*/import org.usfirst.frc.team68.robot.auto.CenterAutoStartCommand;
+/*import org.usfirst.frc.team68.robot.auto.RightAutoStartCommand; */
 import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team68.robot.subsystems.Intake;
@@ -29,12 +31,15 @@ public class Robot extends IterativeRobot {
 	public static NavX navX;
 	public static EndGame endGame;
 	public static USBCamera camera;
-    private LeftAutoStartCommand leftAuto;
-    private RightAutoStartCommand rightAuto;
+/*    private LeftAutoStartCommand leftAuto;
+    private RightAutoStartCommand rightAuto;*/
+    private CenterAutoStartCommand centerAuto;
+
 
 	Command autonomousCommand;
-	SendableChooser<Command> autoChooser = new SendableChooser<>();
-
+	SendableChooser<Command> autoChooser;
+	SendableChooser<String> stratChooser;
+ 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -52,14 +57,23 @@ public class Robot extends IterativeRobot {
         intake = Intake.getIntake();
 		endGame = EndGame.getEndGame();
 		camera = USBCamera.getCamera();
+		centerAuto = new CenterAutoStartCommand(null);
 		// The OI class should be the last to be instantiated
-		 autoChooser = new SendableChooser<>();
-	     autoChooser.addObject("Left Start Auto", leftAuto);
-	     autoChooser.addObject("Right Start Auto", rightAuto);
-//	        autoChooser.addObject("Center Start Auto", new CenterAutoStartCommand());
-	     autoChooser.addDefault("Auto-Run", new DriveXInchesCommand(100, 0.8));
-
-	        SmartDashboard.putData("Autonomous", autoChooser);
+		autoChooser = new SendableChooser<>();
+/*	    autoChooser.addObject("Left Start Auto", leftAuto);
+	    autoChooser.addObject("Right Start Auto", rightAuto);*/
+	    autoChooser.addObject("Center Start Auto", centerAuto);
+	    //autoChooser.addDefault("Auto-Run", new DriveXInchesCommand(100, 0.8));
+	    
+	    //Choosing strategy
+	    stratChooser = new SendableChooser<>();
+	    stratChooser.addObject("SC/SW", "SC/SW");
+	    stratChooser.addObject("SW", "SW");
+	    stratChooser.addObject("SC/SC", "SC/SC");
+	    stratChooser.addObject("SC", "SC");
+	    
+	    SmartDashboard.putData("Autonomous", autoChooser);
+	    SmartDashboard.putData("Strat Chooser", stratChooser);
 		oi = OI.getOI();
 	}
 
@@ -94,8 +108,21 @@ public class Robot extends IterativeRobot {
 		
 		Robot.driveTrain.zeroEncoders();
 		Robot.driveTrain.setShifterLow();
+		double timeout = System.currentTimeMillis();
+        
+		while((DriverStation.getInstance().getGameSpecificMessage() == null || DriverStation.getInstance().getGameSpecificMessage().equals(""))
+                && System.currentTimeMillis() - timeout > 1000) {
+            System.out.println("Waiting For FMS Data");
+        }
 
-		autonomousCommand = chooser.getSelected();
+
+        try {
+        	centerAuto = new CenterAutoStartCommand(stratChooser.getSelected());
+            centerAuto.selectAuto();
+        } catch (Exception e) {
+            System.out.println("-----AUTO ALREADY CREATED, RUNNING PREVIOUS-----");
+        }
+		autonomousCommand = autoChooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -109,6 +136,7 @@ public class Robot extends IterativeRobot {
 		
 		//schedule the autonomous command (example)
 		if (autonomousCommand != null)
+	        System.out.println("Auto Running: " + autonomousCommand.getName());
 			autonomousCommand.start();
 	}
 

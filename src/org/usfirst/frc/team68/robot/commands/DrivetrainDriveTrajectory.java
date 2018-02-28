@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 
+import java.io.File;
+
 import org.usfirst.frc.team68.robot.Path;
 import org.usfirst.frc.team68.robot.Robot;
 
@@ -25,10 +27,10 @@ public class DrivetrainDriveTrajectory extends Command {
 			double l;
 			double r;
 			
-		    public DrivetrainDriveTrajectory() 
+		    public DrivetrainDriveTrajectory(File leftCSV, File rightCSV) 
 		   {
 		    	requires(Robot.driveTrain);
-		    	path = new Path();
+		    	path = new Path(leftCSV, rightCSV);
 		    }
 
 		    protected void initialize() 
@@ -38,19 +40,19 @@ public class DrivetrainDriveTrajectory extends Command {
 		    protected void execute()
 		   {
 		    	
-		    	SmartDashboard.putNumber("L Enc", Robot.driveTrain.getPositionLeft());
-				SmartDashboard.putNumber("R Enc", Robot.driveTrain.getPositionRight());
-				l = path.testEncLeft.calculate(Robot.driveTrain.getPositionLeft());
-				r = path.testEncRight.calculate(Robot.driveTrain.getPositionRight());
+		    	SmartDashboard.putNumber("L Enc", Robot.driveTrain.getPositionLeftPF());
+				SmartDashboard.putNumber("R Enc", Robot.driveTrain.getPositionRightPF());
+				l = path.testEncLeft.calculate(Robot.driveTrain.getPositionLeftPF());
+				r = path.testEncRight.calculate(Robot.driveTrain.getPositionRightPF());
 				SmartDashboard.putNumber("path L", l);
 				SmartDashboard.putNumber("path R", r);
 
 				//double theta = -Robot.navX.getYaw();
-				double theta = Robot.driveTrain.getGyroYaw();
+				double theta = Robot.navX.getYaw();
 				double desiredHeading = Pathfinder.r2d(path.testEncLeft.getHeading());
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading-theta);
 				SmartDashboard.putNumber("angle,", angleDifference);
-				SmartDashboard.putNumber("Yaw", Robot.driveTrain.getGyroYaw());
+				SmartDashboard.putNumber("Yaw", Robot.navX.getYaw());
 				double turn = 0.8 * (-1.0/80.0) * angleDifference;
 
 				Robot.driveTrain.drive(l+turn, r-turn);
@@ -65,8 +67,8 @@ public class DrivetrainDriveTrajectory extends Command {
 		    }
 
 		    protected boolean isFinished() 
-		   {
-		        return isFinished;
+		    {
+				return path.testEncRight.getSegment().equals(path.forwardRightTrajectory.get(path.forwardRightTrajectory.length() - 1)) && path.testEncLeft.getSegment().equals(path.forwardLeftTrajectory.get(path.forwardLeftTrajectory.length() - 1));
 		    }
 
 		    protected void end() 

@@ -313,6 +313,11 @@ public class DriveTrain extends Subsystem {
 
     	return reportPIDRight.toString();
     }
+    
+	public void drive(double l, double r){		
+		leftFront.set(l);
+		rightFront.set(r);
+	}
 
 }
 

@@ -2,7 +2,7 @@ package org.usfirst.frc.team68.robot;
 
 import java.io.File;
 
-import org.usfirst.frc.team68.robot.commands.DrivetrainDriveTrajectory;;
+import org.usfirst.frc.team68.robot.commands.DrivetrainDriveTrajectory;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
@@ -13,12 +13,12 @@ import jaci.pathfinder.modifiers.TankModifier;
 
 public class Path {
 	double timeStep = 0.05;
-	double maxVel = 1.4;
+	double maxVel = 1.7;
 	double maxAccel = 2;
-	double maxJerk = 80;
-	double wheelBaseWidth = 0.6858;
+	double maxJerk = 60;
+	double wheelBaseWidth = 2.208333;
 	int ticksPerRev = 1024; 
-	double wheelDiameter = 0.1;
+	double wheelDiameter = 0.333333;
 
 	double p = 0.7;
 	double i = 0.0;
@@ -43,29 +43,23 @@ public class Path {
 		public EncoderFollower testEncRight;
 		
 	
-	public Path() {
+	public Path(File leftCSV, File rightCSV) {
 		try{	
 			System.out.println("Generating trajectory...");
-			
-			Trajectory.Config testConfig = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, timeStep, maxVel, maxAccel, maxJerk);
-			forwardTrajectory = Pathfinder.generate(points, testConfig);
-			TankModifier testModifier = new TankModifier(forwardTrajectory).modify(wheelBaseWidth);
+			Trajectory trajectoryLW = Pathfinder.readFromCSV(leftCSV);
+			Trajectory trajectoryRW = Pathfinder.readFromCSV(rightCSV);
+
+
 			System.out.println("Trajectory Generation completed");
 			
-			
-			forwardLeftTrajectory = testModifier.getLeftTrajectory();
-			forwardRightTrajectory = testModifier.getRightTrajectory();
-			
-			testEncLeft = new EncoderFollower(forwardLeftTrajectory);
-			testEncRight = new EncoderFollower(forwardRightTrajectory);
+						
+			testEncLeft = new EncoderFollower(trajectoryLW);
+			testEncRight = new EncoderFollower(trajectoryRW);
 			testEncLeft.configureEncoder(Robot.driveTrain.getPositionLeftPF(), ticksPerRev, wheelDiameter);
 			testEncRight.configureEncoder(Robot.driveTrain.getPositionRightPF(), ticksPerRev, wheelDiameter);
 			testEncLeft.configurePIDVA(p, i, d, velocityRatio, accelGain);
 			testEncRight.configurePIDVA(p, i, d, velocityRatio, accelGain);
 			Robot.driveTrain.setModePercentVbus();
-			
-			SmartDashboard.putNumber("Left Calc", testEncLeft.calculate(1440));
-			SmartDashboard.putNumber("Right Calc", testEncLeft.calculate(1440));
 			
 			SmartDashboard.putNumber("Left hd", testEncLeft.getHeading());
 			SmartDashboard.putNumber("Right hd", testEncLeft.getHeading());
