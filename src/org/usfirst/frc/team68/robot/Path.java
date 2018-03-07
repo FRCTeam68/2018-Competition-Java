@@ -17,14 +17,14 @@ public class Path {
 	double maxAccel = 2;
 	double maxJerk = 60;
 	double wheelBaseWidth = 2.208333;
-	int ticksPerRev = 1024; 
+	int ticksPerRev = 8400; 
 	double wheelDiameter = 0.333333;
 
 	double p = 0.7;
 	double i = 0.0;
-	double d = 0.05;
+	double d = 0.07;
 	double velocityRatio = 1/maxVel;
-	double accelGain = 0;
+	double accelGain = 0.0;
 	
 	// The first argument is the proportional gain. Usually this will be quite high
 		// The second argument is the integral gain. This is unused for motion profiling

@@ -55,7 +55,7 @@ public class DriveTrain extends Subsystem {
 		
 		leftRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		
-		leftRear.setSensorPhase(true); 
+		leftRear.setSensorPhase(false);
 		leftRear.configNominalOutputForward(0, 0);
 		leftRear.configNominalOutputReverse(0, 0);
 		leftRear.configPeakOutputForward(1,0); 
@@ -117,14 +117,14 @@ public class DriveTrain extends Subsystem {
     
     public void setShifterHigh() {
     	driveShifter.set(Value.kForward);
-    	//SmartDashboard.putBoolean("High Gear", true);
+    	SmartDashboard.putBoolean("High Gear", true);
     }
     
     public void setShifterLow() {
     	driveShifter.set(Value.kReverse);
-    	//SmartDashboard.putBoolean("High Gear", false);
+    	SmartDashboard.putBoolean("High Gear", false);
     }
-    
+ 
     public void setDriveOrientation() {
     	// Reverse the current drive orientation
     	reverseDrive = !reverseDrive;
@@ -199,10 +199,10 @@ public class DriveTrain extends Subsystem {
 	public double getClosedLoopErrorRight () {
 		return rightRear.getClosedLoopError(0);
 	}
-	
+	/*
 	public double getClosedLoopErrorLeft () {
 		return leftRear.getClosedLoopError(0);
-	}
+	}*/
 	  
     //**********************************************
     // For tuning drivetrain PID
@@ -316,7 +316,7 @@ public class DriveTrain extends Subsystem {
     
 	public void drive(double l, double r){		
 		leftFront.set(l);
-		rightFront.set(r);
+		rightFront.set(-r);
 	}
 
 }

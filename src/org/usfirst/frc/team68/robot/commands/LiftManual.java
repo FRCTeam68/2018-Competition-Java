@@ -30,7 +30,7 @@ public class LiftManual extends Command {
 	@Override
 	protected void execute() {
 		double speed;
-		speed = Robot.oi.getLeftXboxManipulatorJoystick()/2;
+		speed = Robot.oi.getLeftXboxManipulatorJoystick()/1.5;
 		
 		SmartDashboard.putNumber("CommandSpeed", speed);
 		

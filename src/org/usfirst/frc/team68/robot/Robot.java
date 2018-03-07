@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.cscore.UsbCamera;
 
-/*import org.usfirst.frc.team68.robot.auto.LeftAutoStartCommand;
-*/import org.usfirst.frc.team68.robot.auto.CenterAutoStartCommand;
+import org.usfirst.frc.team68.robot.auto.CenterAutoStartCommand;
+import org.usfirst.frc.team68.robot.auto.LeftAutoStartCommand;
+import org.usfirst.frc.team68.robot.auto.RightAutoStartCommand;
+import org.usfirst.frc.team68.robot.auto.DriveStraight;
+import org.usfirst.frc.team68.robot.commands.LiftManual;
 /*import org.usfirst.frc.team68.robot.auto.RightAutoStartCommand; */
 import org.usfirst.frc.team68.robot.subsystems.Compressor;
 import org.usfirst.frc.team68.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team68.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj.TimedRobot;
 import org.usfirst.frc.team68.robot.subsystems.Lift;
 import org.usfirst.frc.team68.robot.subsystems.NavX;
 import org.usfirst.frc.team68.robot.subsystems.USBCamera;
@@ -34,13 +37,16 @@ public class Robot extends IterativeRobot {
 /*    private LeftAutoStartCommand leftAuto;
     private RightAutoStartCommand rightAuto;*/
     private CenterAutoStartCommand centerAuto;
+    private DriveStraight driveStraight;
+    private LeftAutoStartCommand leftAuto;
+    private RightAutoStartCommand rightAuto;
 
 
 	Command autonomousCommand;
 	SendableChooser<Command> autoChooser;
 	SendableChooser<String> stratChooser;
  
-	/**
+	/**	
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
@@ -50,22 +56,33 @@ public class Robot extends IterativeRobot {
 		robotMap = RobotMap.getRobotMap();
 
 		// Create a single instance of each Robot subsystem here
-//		compressor = Compressor.getCompressor();
+		compressor = Compressor.getCompressor();
 		navX = new NavX();
 		driveTrain = DriveTrain.getDriveTrain();   
 		lift = Lift.getLift();
         intake = Intake.getIntake();
 		endGame = EndGame.getEndGame();
-		camera = USBCamera.getCamera();
+		//camera = USBCamera.getCamera();
+		/*UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(640, 480);*/
+        
 		centerAuto = new CenterAutoStartCommand(null);
+		driveStraight = new DriveStraight(null);
+		leftAuto = new LeftAutoStartCommand(null);
+		rightAuto = new RightAutoStartCommand(null);
 		// The OI class should be the last to be instantiated
 		autoChooser = new SendableChooser<>();
 /*	    autoChooser.addObject("Left Start Auto", leftAuto);
 	    autoChooser.addObject("Right Start Auto", rightAuto);*/
 	    autoChooser.addObject("Center Start Auto", centerAuto);
+	    autoChooser.addObject("Drive Straight", driveStraight);
+	    autoChooser.addObject("Left Start Auto", leftAuto);
+	    autoChooser.addObject("Right Start Auto", rightAuto);
+
 	    //autoChooser.addDefault("Auto-Run", new DriveXInchesCommand(100, 0.8));
-	    
 	    //Choosing strategy
+	    Robot.intake.intakeUpPosition();
+
 	    stratChooser = new SendableChooser<>();
 	    stratChooser.addObject("SC/SW", "SC/SW");
 	    stratChooser.addObject("SW", "SW");
@@ -84,7 +101,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		Robot.intake.intakeNormal();
 	}
 
 	@Override
@@ -107,7 +124,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		Robot.driveTrain.zeroEncoders();
-		Robot.driveTrain.setShifterLow();
+		//Robot.driveTrain.setShifterLow();
+		Robot.driveTrain.setShifterHigh();
+		Robot.intake.intakeUpPosition();
 		double timeout = System.currentTimeMillis();
         
 		while((DriverStation.getInstance().getGameSpecificMessage() == null || DriverStation.getInstance().getGameSpecificMessage().equals(""))
@@ -116,12 +135,26 @@ public class Robot extends IterativeRobot {
         }
 
 
-        try {
-        	centerAuto = new CenterAutoStartCommand(stratChooser.getSelected());
+        Command position = autoChooser.getSelected();
+        if (position == centerAuto){
+        	centerAuto.PutStrat(stratChooser.getSelected());
             centerAuto.selectAuto();
-        } catch (Exception e) {
-            System.out.println("-----AUTO ALREADY CREATED, RUNNING PREVIOUS-----");
         }
+        
+        if (position == leftAuto){
+        	leftAuto.PutStrat(stratChooser.getSelected());
+            leftAuto.selectAuto();
+        }
+        
+        if (position == rightAuto){
+        	rightAuto.PutStrat(stratChooser.getSelected());
+            rightAuto.selectAuto();
+        }
+        
+        if (position == driveStraight){
+            driveStraight.selectAuto();
+        }
+        
 		autonomousCommand = autoChooser.getSelected();
 
 		/*
@@ -146,6 +179,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+	    SmartDashboard.putString("Intake Value", Robot.intake.getOrientation().toString());
 	}
 
 	@Override
@@ -158,6 +192,7 @@ public class Robot extends IterativeRobot {
     	}
     	Robot.intake.intakeUpPosition();
     	Robot.intake.intakeNormal();
+    	Robot.lift.setDefaultCommand(new LiftManual());
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -173,10 +208,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Lift Value Stick", Robot.oi.getXboxManipulateLT());
 		SmartDashboard.putNumber("Lift Encoder Position", Robot.lift.getPosition());
 		SmartDashboard.putBoolean("LiftSwitchDown", Robot.lift.getSwitchDown());
 		SmartDashboard.putBoolean("LiftManual", Robot.lift.getManualStatus());
+		SmartDashboard.putNumber("Left Encoder", Robot.driveTrain.getPositionLeftPF());
+		SmartDashboard.putNumber("Right Encoder", Robot.driveTrain.getPositionRightPF());
+		SmartDashboard.putBoolean("Limit Switch Boolean", Robot.intake.getSwitch());
+		SmartDashboard.putNumber("Left DriveTrain Speed", Robot.driveTrain.getDriveLeftSpeed2());
+		SmartDashboard.putNumber("Right DriveTrain Speed", Robot.driveTrain.getDriveRightSpeed2());
 
 		if (Robot.lift.getSwitchDown() == false) {
     		Robot.lift.zeroEncoder();

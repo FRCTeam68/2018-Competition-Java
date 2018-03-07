@@ -36,6 +36,7 @@ public class IntakeAutoOut extends Command {
 		
 		Timer.delay(1);
 		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP, RobotMap.INTAKE_SPEED_STOP);
+		isFinished = true;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

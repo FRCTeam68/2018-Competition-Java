@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team68.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
@@ -26,6 +25,7 @@ public class DrivetrainDriveTrajectory extends Command {
 			boolean firstRun = true;
 			double l;
 			double r;
+			boolean isFinished = false;
 			
 		    public DrivetrainDriveTrajectory(File leftCSV, File rightCSV) 
 		   {
@@ -53,13 +53,14 @@ public class DrivetrainDriveTrajectory extends Command {
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading-theta);
 				SmartDashboard.putNumber("angle,", angleDifference);
 				SmartDashboard.putNumber("Yaw", Robot.navX.getYaw());
-				double turn = 0.8 * (-1.0/80.0) * angleDifference;
+				double turn = 5 * (-1.0/80.0) * angleDifference;
 
 				Robot.driveTrain.drive(l+turn, r-turn);
 
 		    	if(path.testEncLeft.isFinished() && path.testEncRight.isFinished()){
 			    	Robot.driveTrain.drive(0, 0);
 		    		System.out.println("Both trajectories finished");
+		    		isFinished = true;
 		    	}
 				//SmartDashboard.putNumber("Segment");
 
@@ -68,7 +69,8 @@ public class DrivetrainDriveTrajectory extends Command {
 
 		    protected boolean isFinished() 
 		    {
-				return path.testEncRight.getSegment().equals(path.forwardRightTrajectory.get(path.forwardRightTrajectory.length() - 1)) && path.testEncLeft.getSegment().equals(path.forwardLeftTrajectory.get(path.forwardLeftTrajectory.length() - 1));
+				//return path.testEncRight.getSegment().equals(path.forwardRightTrajectory.get(path.forwardRightTrajectory.length() - 1)) && path.testEncLeft.getSegment().equals(path.forwardLeftTrajectory.get(path.forwardLeftTrajectory.length() - 1));
+		    	return isFinished;
 		    }
 
 		    protected void end() 

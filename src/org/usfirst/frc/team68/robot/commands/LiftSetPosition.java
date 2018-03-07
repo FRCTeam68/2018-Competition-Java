@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team68.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,6 +20,7 @@ public class LiftSetPosition extends Command {
 	
 	private boolean isFinished = false;
 	private double setPoint;
+	private double startTime;
 	
 	public LiftSetPosition(double position) {
 		// Use requires() here to declare subsystem dependencies
@@ -29,12 +31,15 @@ public class LiftSetPosition extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		startTime = Timer.getFPGATimestamp();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
 		Robot.lift.setPosition(setPoint);
+
 		isFinished = true;
 	}
 

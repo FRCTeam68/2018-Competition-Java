@@ -7,45 +7,45 @@
 
 package org.usfirst.frc.team68.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team68.robot.Robot;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class IntakeDownPosition extends Command 
-{
-	boolean isFinished = false;
+public class IntakeToggleOrientation extends Command {
+			boolean isFinished = false;
 
-    public IntakeDownPosition() 
-   {
-    	requires(Robot.intake);
-    }
+		    public IntakeToggleOrientation() 
+		   {
+		    	requires(Robot.intake);
+		    }
 
-    protected void initialize() 
-    {
+		    protected void initialize() 
+		    {
 
-    }
+		    }
 
-    protected void execute()
-   {
-    	Robot.intake.intakeDownPosition();
-    	isFinished = true;
-    }
+		    protected void execute()
+		   {
+		    	
+		    	Robot.intake.toggleIntake();
+		    	isFinished = true;
+		    }
 
-    protected boolean isFinished() 
-   {
-        return isFinished;
-    }
+		    protected boolean isFinished() 
+		   {
+		        return isFinished;
+		    }
 
-    protected void end() 
-   {
+		    protected void end() 
+		   {
 
-    }
+		    }
 
-    protected void interrupted() 
-    {
+		    protected void interrupted() 
+		    {
 
-    }
-}
-
+		    }
+		}

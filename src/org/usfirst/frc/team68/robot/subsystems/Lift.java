@@ -43,7 +43,7 @@ public class Lift extends Subsystem {
 		liftMotor.setSensorPhase(true); 
 		liftMotor.configNominalOutputForward(0, 0);
 		liftMotor.configNominalOutputReverse(0, 0);
-		liftMotor.configPeakOutputForward(1,0); 
+		liftMotor.configPeakOutputForward(.4,0); 
 		liftMotor.configPeakOutputReverse(-1,0); 
 //		liftMotor.configNeutralDeadband(0.001, 0);
 		liftMotor.selectProfileSlot(RobotMap.LIFT_PID_SLOT, 0);
@@ -52,7 +52,7 @@ public class Lift extends Subsystem {
 		liftMotor.config_kI(RobotMap.LIFT_PID_SLOT, RobotMap.LIFT_PID_I, 0);
 		liftMotor.config_kD(RobotMap.LIFT_PID_SLOT, RobotMap.LIFT_PID_D, 0);
 		liftMotor.setNeutralMode(NeutralMode.Brake);
-		liftMotor.set(ControlMode.PercentOutput, 0);;
+		liftMotor.set(ControlMode.PercentOutput, 0);
 		manualBool = true;
 		//limitSwitchUp = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_UP);
 		limitSwitchDown = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_DOWN);
@@ -63,7 +63,7 @@ public class Lift extends Subsystem {
 	public void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		//Needs to be fixed somehow. Not sure what happened
-		setDefaultCommand(new LiftManual());
+		//setDefaultCommand(new LiftManual());
 	}
 	public void setLiftSpeed(double speed) {
 		SmartDashboard.putNumber("LiftSpeed", speed);
