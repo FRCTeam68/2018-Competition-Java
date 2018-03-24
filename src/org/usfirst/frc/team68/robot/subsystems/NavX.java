@@ -42,6 +42,10 @@ public class NavX implements PIDOutput { //this class controls the PID for the n
 	public double getYaw() {
 		return -navX.getYaw();
 	}
+	
+	public boolean isCalibrated() {
+		return navX.isCalibrating();
+	}
 
 	@Override
 	public void pidWrite(double output) {		
@@ -84,11 +88,15 @@ public class NavX implements PIDOutput { //this class controls the PID for the n
 	}
 	
 	public void turnAngle(double angle) {
-		turnController.setSetpoint(angle);
-		rotateToAngleRate = 0;
-		turnController.enable();
+	
+		if (!turnController.isEnabled()) {
+			turnController.setSetpoint(kTargetAngleDegrees);
+			rotateToAngleRate = 0; // This value will be updated in the pidWrite() method.
+			turnController.enable();
+		}
 		double leftStickValue = rotateToAngleRate;
 		double rightStickValue = rotateToAngleRate;
-		Robot.driveTrain.drive(leftStickValue, rightStickValue);
+		Robot.driveTrain.drive(leftStickValue,  rightStickValue);
+		
 	}
 }

@@ -10,8 +10,8 @@ import org.usfirst.frc.team68.robot.RobotMap;
 public class RetractHooks extends Command 
 {
 	boolean isFinished = false;
-	double speedA = RobotMap.HOOK_MOTOR_1_FORWARDS/3;
-	double speedB = RobotMap.HOOK_MOTOR_2_FORWARDS/3;
+	double speedA = RobotMap.HOOK_MOTOR_1_FORWARDS;
+	double speedB = RobotMap.HOOK_MOTOR_2_FORWARDS;
 
 	
     public RetractHooks() 
@@ -26,14 +26,12 @@ public class RetractHooks extends Command
 
     protected void execute()
    {
-    	SmartDashboard.putNumber("speedA Retract", speedA);
-    	SmartDashboard.putNumber("speedB Retract", speedB);
-    	if (Robot.endGame.getSwitchA() == false) {
+    	/*if (Robot.endGame.getSwitchA() == false) {
     		speedA = 0;
     	}
     	
     	else {
-    		speedA = RobotMap.HOOK_MOTOR_1_FORWARDS/3;
+    		speedA = RobotMap.HOOK_MOTOR_1_FORWARDS;
     	}
     	
     	if (Robot.endGame.getSwitchB() == false) {
@@ -41,8 +39,8 @@ public class RetractHooks extends Command
     	}
     	
     	else {
-    		speedB = RobotMap.HOOK_MOTOR_2_FORWARDS/3;
-    	}
+    		speedB = RobotMap.HOOK_MOTOR_2_FORWARDS;
+    	}*/
     	Robot.endGame.setHookSpeed(speedA, speedB);
     	
     	

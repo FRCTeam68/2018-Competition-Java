@@ -23,9 +23,9 @@ public class WinchDown extends Command
     
     protected void execute()
    {
-    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_1_FORWARDS, RobotMap.WINCH_MOTOR_2_FORWARDS);
+    	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_1_BACKWARDS/2, RobotMap.WINCH_MOTOR_2_FORWARDS/2);
    
-    	isFinished = true;
+    	//isFinished = true;
    }
 
    

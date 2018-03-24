@@ -7,13 +7,13 @@ import org.usfirst.frc.team68.robot.RobotMap;
 
 
 
-public class ExtendHooks extends Command 
+public class ExtendHooksSlow extends Command 
 {
 	boolean isFinished = false;
-	double speedA = RobotMap.HOOK_MOTOR_1_BACKWARDS*0.8;
-	double speedB = RobotMap.HOOK_MOTOR_2_BACKWARDS*0.8;
+	double speedA = RobotMap.HOOK_MOTOR_1_BACKWARDS/2;
+	double speedB = RobotMap.HOOK_MOTOR_2_BACKWARDS/2;
 	
-    public ExtendHooks() 
+    public ExtendHooksSlow() 
    {
     	requires(Robot.endGame);
     }

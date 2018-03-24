@@ -29,12 +29,15 @@ public class LiftManual extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double speed;
+		/*double speed;
 		speed = Robot.oi.getLeftXboxManipulatorJoystick()/1.5;
+		Robot.lift.setLiftSpeed(speed);*/
 		
-		SmartDashboard.putNumber("CommandSpeed", speed);
+		double position;
+		position = Robot.lift.getPosition();
+	
 		
-		Robot.lift.setLiftSpeed(speed);
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

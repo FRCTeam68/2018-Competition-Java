@@ -59,7 +59,9 @@ public class DriveTrain extends Subsystem {
 		leftRear.configNominalOutputForward(0, 0);
 		leftRear.configNominalOutputReverse(0, 0);
 		leftRear.configPeakOutputForward(1,0); 
-		leftRear.configPeakOutputReverse(-1,0); 
+		leftRear.configPeakOutputReverse(-1,0);
+		leftRear.configPeakCurrentDuration(0, 10);
+		
 		leftRear.selectProfileSlot(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, 0);
 		leftRear.config_kF(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_F, 0);
 		leftRear.config_kP(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_P, 0);
@@ -67,12 +69,15 @@ public class DriveTrain extends Subsystem {
 		leftRear.config_kD(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_D, 0);
 		
 		rightRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		
+		rightRear.setInverted(true);
 		rightRear.setSensorPhase(true); 
 		rightRear.configNominalOutputForward(0, 0);
 		rightRear.configNominalOutputReverse(0, 0);
 		rightRear.configPeakOutputForward(1,0); 
 		rightRear.configPeakOutputReverse(-1,0); 
+		rightRear.configPeakCurrentDuration(0, 10);
+	
+		
 		rightRear.selectProfileSlot(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, 0);
 		rightRear.config_kF(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, RobotMap.DRIVETRAIN_RIGHT_PID_F, 0);
 		rightRear.config_kP(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, RobotMap.DRIVETRAIN_RIGHT_PID_P, 0);
@@ -81,10 +86,13 @@ public class DriveTrain extends Subsystem {
 		
 		leftFront = new WPI_TalonSRX(RobotMap.DRIVETRAIN_LEFT_FRONT);
 		leftFront.set(ControlMode.Follower, leftRear.getDeviceID());
+		leftFront.configPeakCurrentDuration(0, 10);
 
 		rightFront = new WPI_TalonSRX(RobotMap.DRIVETRAIN_RIGHT_FRONT);
 		rightFront.set(ControlMode.Follower, rightRear.getDeviceID());
-
+		rightFront.configPeakCurrentDuration(0, 10);
+		rightFront.setInverted(true);
+		
 		drive = new DifferentialDrive(leftRear, rightRear);
 		
 		// setting the setSafetyEnabled out because there is a known issue
@@ -137,9 +145,64 @@ public class DriveTrain extends Subsystem {
     	leftRear.setSelectedSensorPosition(0,0,0);
     	rightRear.setSelectedSensorPosition(0,0,0);
     }
+    
+    public double getVoltageLeft() {
+		return leftRear.getMotorOutputVoltage();
+    	
+    }
+    
+    public double getVoltageLeft2() {
+    	return leftRear.getBusVoltage();
+    }
+    
+    public double getVoltageRight2() {
+    	return rightRear.getBusVoltage();
+    }
+    
+    public double getVoltageRight() {
+    	return rightRear.getMotorOutputVoltage();
+    }
 
+    public void invertDrivetrain() {
+    	//Invert motors
+    	leftRear.setInverted(true);
+    	rightRear.setInverted(false);
+    	leftFront.setInverted(true);
+    	rightFront.setInverted(false);
+    	
+    	// Invert encoders
+    	leftRear.setSensorPhase(false);
+    	rightRear.setSensorPhase(false);
+    }
+    
+    public void normalDrivetrain() {
+    	// Normalize motors
+    	leftRear.setInverted(false);
+    	rightRear.setInverted(true);
+    	leftFront.setInverted(false);
+    	rightFront.setInverted(true);
+    	
+    	// Normalize encoders
+    	leftRear.setSensorPhase(false);
+    	rightRear.setSensorPhase(false);
+    }
+    
     public DoubleSolenoid.Value getShifter() {
     	return driveShifter.get();
+    }
+    
+    public void setCoastMode() {
+		leftRear.setNeutralMode(NeutralMode.Coast);
+		leftFront.setNeutralMode(NeutralMode.Coast);
+		rightRear.setNeutralMode(NeutralMode.Coast);
+		rightFront.setNeutralMode(NeutralMode.Coast);
+    }
+    
+    public void setBrakeMode() {
+		leftRear.setNeutralMode(NeutralMode.Brake);
+		leftFront.setNeutralMode(NeutralMode.Brake);
+		rightRear.setNeutralMode(NeutralMode.Brake);
+		rightFront.setNeutralMode(NeutralMode.Brake);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -157,6 +220,11 @@ public class DriveTrain extends Subsystem {
 //    	leftRear.set(0);  Do we need this with the second parameter of the control mode setting?  Test it out?
        	rightRear.set(ControlMode.PercentOutput,0);
 //    	rightRear.set(0);
+    }
+    
+    public void setPosition(double left, double right) {
+    	leftRear.set(ControlMode.Position, left);
+    	rightRear.set(ControlMode.Position, right);
     }
     
     public void setModeMotionMagic() {
@@ -315,9 +383,28 @@ public class DriveTrain extends Subsystem {
     }
     
 	public void drive(double l, double r){		
-		leftFront.set(l);
-		rightFront.set(-r);
+		leftRear.set(l);
+		rightRear.set(r);
 	}
+	
+	public void setRobotHeading(double heading) {
+		double error = (Robot.navX.getAngle() - heading);
+		rightDrive(error*RobotMap.kpTurn);
+		leftDrive(error*RobotMap.kpTurn);
+	}
+	
+	public void leftDrive(double power) {
+		leftRear.set(ControlMode.PercentOutput, power);
+	}
+	
+	public void rightDrive (double power) {
+		rightRear.set(ControlMode.PercentOutput, power);
+	}
+	
+	public void stopDriving() {
+		leftRear.set(ControlMode.PercentOutput, 0);
+		rightRear.set(ControlMode.PercentOutput, 0);
 
+	}
 }
 

@@ -18,6 +18,7 @@ public class WinchUp extends Command
     
     protected void initialize() 
     {
+    	Robot.compressor.stop();
     }
 
     
@@ -38,6 +39,7 @@ public class WinchUp extends Command
     protected void end() 
    {
     	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP);
+    	Robot.compressor.start();
     }
 
     
@@ -45,6 +47,7 @@ public class WinchUp extends Command
     {
 
     	Robot.endGame.setWinchSpeed(RobotMap.WINCH_MOTOR_STOP, RobotMap.WINCH_MOTOR_STOP);
+    	Robot.compressor.start();
    	
     }
 }

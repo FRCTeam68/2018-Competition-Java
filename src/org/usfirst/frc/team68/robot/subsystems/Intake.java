@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.VictorSP;
 
 import org.usfirst.frc.team68.robot.Robot;
 import org.usfirst.frc.team68.robot.RobotMap;
+import org.usfirst.frc.team68.robot.commands.DriveWithXboxJoysticks;
 import org.usfirst.frc.team68.robot.commands.IntakeManualIn;
+import org.usfirst.frc.team68.robot.commands.IntakeManualXboxJoysticks;
+
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -34,14 +37,12 @@ public class Intake extends Subsystem {
     // Constructor
     private Intake()
     {
-    	
     	intakeOrientation = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_UP, RobotMap.INTAKE_DOWN);
     	orientationStatus = Value.kForward;
     	intakeClamper = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.INTAKE_CLAMP, RobotMap.INTAKE_NORMAL);
     	intakeMotorA = new VictorSP(RobotMap.INTAKE_MOTOR_A);
     	intakeMotorB = new VictorSP(RobotMap.INTAKE_MOTOR_B);
 		limitSwitch = new DigitalInput(RobotMap.INTAKE_LIMIT_SWITCH);
-
     }
     
     public boolean getSwitch() {
@@ -50,7 +51,6 @@ public class Intake extends Subsystem {
 
     public void initDefaultCommand() 
     {
-  	
     }
     
     public void intakeUpPosition() 
@@ -73,6 +73,16 @@ public class Intake extends Subsystem {
     	intakeMotorA.set(speedA);
     	intakeMotorB.set(speedB);
     	
+    }
+    
+    public void setIntakeSpeedLeft(double speedA)
+    {
+    	intakeMotorA.set(speedA);	
+    }
+    
+    public void setIntakeSpeedRight(double speedB)
+    {
+    	intakeMotorB.set(speedB);
     }
     
     

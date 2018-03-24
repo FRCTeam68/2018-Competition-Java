@@ -13,7 +13,7 @@ import org.usfirst.frc.team68.robot.commands.IntakeManualOut;
 import org.usfirst.frc.team68.robot.commands.IntakeToggleClamp;
 import org.usfirst.frc.team68.robot.commands.IntakeUpPosition;
 import org.usfirst.frc.team68.robot.commands.LiftSetPosition;
-import org.usfirst.frc.team68.robot.commands.TurnAngle;
+import org.usfirst.frc.team68.robot.commands.TurnToAngle;
 import org.usfirst.frc.team68.robot.commands.ZeroEncoders;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -52,17 +52,13 @@ public class DriveStraight extends CommandGroup {
             target = "None";
         }
     	
-	    File leftCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_left_detailed.csv");
-	    File rightCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_right_detailed.csv");    
-
+	    
     	
 	    /*File leftCSVA = new File("/home/lvuser/paths/Turn90B/Turn90B_left_detailed.csv");
 	    File rightCSVA = new File("/home/lvuser/paths/Turn90B/Turn90B_right_detailed.csv");
 */
-	    
-	    	
-
-
+    	File leftCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_left_detailed.csv");
+	    File rightCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_right_detailed.csv");    
 	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
 	    /*System.out.print("lol it worked");
 	    File leftCSVA = new File("/home/lvuser/paths/RightSwitch/RightSwitch_left_detailed.csv");

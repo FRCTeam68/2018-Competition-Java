@@ -4,18 +4,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team68.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 /**
  *
  */
-public class TurnAngle extends Command {
+public class DriveCoastMode extends Command {
 	boolean isFinished = false;
-	private double angleRate = 0;
-	
 
-    public TurnAngle(double angle) {
+    public DriveCoastMode() {
         // Use requires() here to declare subsystem dependencies
     	requires(Robot.driveTrain);
-    	angleRate = angle;
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +23,8 @@ public class TurnAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.navX.turnAngle(90.0f);
+		Robot.driveTrain.setCoastMode();
+		isFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

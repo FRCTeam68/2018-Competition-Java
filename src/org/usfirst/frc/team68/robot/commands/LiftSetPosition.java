@@ -21,6 +21,8 @@ public class LiftSetPosition extends Command {
 	private boolean isFinished = false;
 	private double setPoint;
 	private double startTime;
+	double currentPos = Robot.lift.getPosition();
+
 	
 	public LiftSetPosition(double position) {
 		// Use requires() here to declare subsystem dependencies
@@ -38,9 +40,20 @@ public class LiftSetPosition extends Command {
 	@Override
 	protected void execute() {
 		
+/*		if (Robot.lift.getPosition() < setPoint) {
+			Robot.intake.intakeUpPosition();
+			Timer.delay(0.5);
+		}
+*/		
 		Robot.lift.setPosition(setPoint);
-
+		//Robot.intake.intakeDownPosition();
+		/*if (Math.abs(Robot.lift.getPosition() - setPoint) < 10000) {
+			Robot.intake.intakeDownPosition();
+		}*/
+		
 		isFinished = true;
+
+		//isFinished = true;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

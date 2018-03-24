@@ -24,21 +24,7 @@ public class DriveWithXboxJoysticks extends Command {
 
 	@Override
 	protected void execute() {
-   		Robot.driveTrain.tankDrive(-Robot.oi.getLeftXboxJoystickValue(), -Robot.oi.getRightXboxJoystickValue());
-/*   		SmartDashboard.putNumber("Yaw: ", Robot.driveTrain.getGyroYaw());
-   		SmartDashboard.putNumber("Pitch: ", Robot.driveTrain.getGyroPitch());
-   		SmartDashboard.putNumber("Roll: ", Robot.driveTrain.getGyroRoll());
-*/
-   		
-/*		speedLeft = Robot.driveTrain.getDriveLeftSpeed();
-		SmartDashboard.putNumber("Drive Left RPM Chart: ", speedLeft);
-		SmartDashboard.putNumber("Drive Left RPM: ", speedLeft);
-		
-		speedRight = Robot.driveTrain.getDriveRightSpeed();
-		SmartDashboard.putNumber("Drive Right RPM Chart: ", speedRight);
-		SmartDashboard.putNumber("Drive Right RPM: ", speedRight);
-*/
-
+   		Robot.driveTrain.tankDrive(-Robot.oi.getLeftXboxJoystickValue(), Robot.oi.getRightXboxJoystickValue());
 	}
 
 	@Override

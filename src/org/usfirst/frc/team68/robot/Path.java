@@ -13,19 +13,18 @@ import jaci.pathfinder.modifiers.TankModifier;
 
 public class Path {
 	double timeStep = 0.05;
-	double maxVel = 1.7;
+	double maxVel = 3;
 	double maxAccel = 2;
-	double maxJerk = 60;
+	double maxJerk = 80;
 	double wheelBaseWidth = 2.208333;
 	int ticksPerRev = 8400; 
-	double wheelDiameter = 0.333333;
+	double wheelDiameter = 0.33333333;
 
-	double p = 0.7;
+	double p = 2;
 	double i = 0.0;
-	double d = 0.07;
+	double d = .5;
 	double velocityRatio = 1/maxVel;
-	double accelGain = 0.0;
-	
+	double accelGain = 0.0;	
 	// The first argument is the proportional gain. Usually this will be quite high
 		// The second argument is the integral gain. This is unused for motion profiling
 		// The third argument is the derivative gain. Tweak this if you are unhappy with the tracking of the trajectory
@@ -60,10 +59,6 @@ public class Path {
 			testEncLeft.configurePIDVA(p, i, d, velocityRatio, accelGain);
 			testEncRight.configurePIDVA(p, i, d, velocityRatio, accelGain);
 			Robot.driveTrain.setModePercentVbus();
-			
-			SmartDashboard.putNumber("Left hd", testEncLeft.getHeading());
-			SmartDashboard.putNumber("Right hd", testEncLeft.getHeading());
-			
 			
 		}catch(Exception e){
 			e.printStackTrace();

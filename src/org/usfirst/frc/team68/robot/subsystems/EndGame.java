@@ -4,8 +4,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -19,6 +22,8 @@ public class EndGame extends Subsystem {
 	private WPI_TalonSRX winchMotor2;
 	private DigitalInput limitSwitchA;
 	private DigitalInput limitSwitchB;
+/*	private AnalogInput hookSensorA;
+	private AnalogInput hookSensorB;*/
 
 	
     private static EndGame endgame;
@@ -39,8 +44,13 @@ public class EndGame extends Subsystem {
 		winchMotor2 = new WPI_TalonSRX(RobotMap.WINCH_MOTOR_2);
 		limitSwitchA = new DigitalInput(RobotMap.HOOK_LIMIT_SWITCH_A);
 		limitSwitchB = new DigitalInput(RobotMap.HOOK_LIMIT_SWITCH_B);
-		SmartDashboard.putBoolean("LimitSwitchHookA", limitSwitchA.get());
+/*		hookSensorA = new AnalogInput(RobotMap.HOOK_SENSOR_A);
+		hookSensorB = new AnalogInput(RobotMap.HOOK_SENSOR_B);
+*/		SmartDashboard.putBoolean("LimitSwitchHookA", limitSwitchA.get());
 		SmartDashboard.putBoolean("LimitSwitchHookB", limitSwitchB.get());
+		
+		winchMotor1.setNeutralMode(NeutralMode.Coast);
+		winchMotor2.setNeutralMode(NeutralMode.Coast);
 	}
     
     
@@ -57,6 +67,10 @@ public class EndGame extends Subsystem {
 			hookMotor2.set(speedF);
 			
 	}	
+	
+	public void setHookSpeed2(double speed) {
+		hookMotor2.set(speed);
+	}
 
 	public void setWinchSpeed(double speedC, double speedD)
 	{
