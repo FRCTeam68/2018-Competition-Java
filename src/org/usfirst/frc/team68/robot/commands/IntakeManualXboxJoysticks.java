@@ -41,6 +41,8 @@ public class IntakeManualXboxJoysticks extends Command {
 		
 		if (Robot.intake.getSwitch() == true && (Robot.oi.getLeftXboxManipulatorJoystick() < 0.5) && (Robot.oi.getRightXboxManipulatorJoystick() > 0.5))  {
 			Robot.intake.intakeNormal();
+			Robot.intake.setIntakeSpeedLeft(Robot.oi.getLeftXboxManipulatorJoystick()/2);
+			Robot.intake.setIntakeSpeedRight(Robot.oi.getRightXboxManipulatorJoystick()/2);
 		}
 		
 		else {

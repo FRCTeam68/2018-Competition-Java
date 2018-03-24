@@ -146,23 +146,6 @@ public class DriveTrain extends Subsystem {
     	rightRear.setSelectedSensorPosition(0,0,0);
     }
     
-    public double getVoltageLeft() {
-		return leftRear.getMotorOutputVoltage();
-    	
-    }
-    
-    public double getVoltageLeft2() {
-    	return leftRear.getBusVoltage();
-    }
-    
-    public double getVoltageRight2() {
-    	return rightRear.getBusVoltage();
-    }
-    
-    public double getVoltageRight() {
-    	return rightRear.getMotorOutputVoltage();
-    }
-
     public void invertDrivetrain() {
     	//Invert motors
     	leftRear.setInverted(true);
@@ -217,9 +200,7 @@ public class DriveTrain extends Subsystem {
         
     public void setModePercentVbus () {
     	leftRear.set(ControlMode.PercentOutput,0);
-//    	leftRear.set(0);  Do we need this with the second parameter of the control mode setting?  Test it out?
        	rightRear.set(ControlMode.PercentOutput,0);
-//    	rightRear.set(0);
     }
     
     public void setPosition(double left, double right) {
@@ -229,9 +210,7 @@ public class DriveTrain extends Subsystem {
     
     public void setModeMotionMagic() {
     	leftRear.set(ControlMode.MotionMagic, 0);
-//    	leftRear.set(0);
     	rightRear.set(ControlMode.MotionMagic, 0);
-//    	rightRear.set(0);
     	this.zeroEncoders();
     }
     
@@ -267,10 +246,7 @@ public class DriveTrain extends Subsystem {
 	public double getClosedLoopErrorRight () {
 		return rightRear.getClosedLoopError(0);
 	}
-	/*
-	public double getClosedLoopErrorLeft () {
-		return leftRear.getClosedLoopError(0);
-	}*/
+
 	  
     //**********************************************
     // For tuning drivetrain PID
@@ -314,8 +290,6 @@ public class DriveTrain extends Subsystem {
 		leftRear.config_kI(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, IL, 0);
 		leftRear.config_kD(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, DL, 0);
 
-    	targetSpeedLeft = speed;
-//    	this.setDriveLeftSpeed(SmartDashboard.getNumber("Drive Left Target Speed: ", targetSpeedLeft));
     }
 
     public void setDriveRightPID(double FR, double PR, double IR, double DR, double speed){
@@ -323,8 +297,7 @@ public class DriveTrain extends Subsystem {
 		rightRear.config_kP(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, PR, 0);
 		rightRear.config_kI(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, IR, 0);
 		rightRear.config_kD(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, DR, 0);
-    	targetSpeedRight = speed;
-    	//this.setDriveRightSpeed(SmartDashboard.getNumber("Drive Right Target RPM Value: ", targetSpeedRight));
+
     }
     
     public double getDriveLeftSpeed() {
@@ -356,11 +329,7 @@ public class DriveTrain extends Subsystem {
     	reportPIDLeft.append("\terr:");
     	reportPIDLeft.append(leftRear.getClosedLoopError(0));
     	reportPIDLeft.append("\ttrg:");
-/*    	reportPIDLeft.append(leftRear.getMotionMagicCruiseVelocity());
-    	reportPIDLeft.append("\tactvel:");
-    	reportPIDLeft.append(leftRear.getMotionMagicActTrajVelocity());
-    	reportPIDLeft.append("\n");
-*/
+
     	return reportPIDLeft.toString();
     }
     

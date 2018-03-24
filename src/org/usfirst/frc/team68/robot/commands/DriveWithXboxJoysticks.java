@@ -8,10 +8,7 @@ import org.usfirst.frc.team68.robot.Robot;
 
 public class DriveWithXboxJoysticks extends Command {
 	
-	boolean isFinished = false;
-	private double speedLeft;
-	private double speedRight;
-	
+	boolean isFinished = false;	
 	
 	public DriveWithXboxJoysticks() {
 		
@@ -24,7 +21,14 @@ public class DriveWithXboxJoysticks extends Command {
 
 	@Override
 	protected void execute() {
-   		Robot.driveTrain.tankDrive(-Robot.oi.getLeftXboxJoystickValue(), Robot.oi.getRightXboxJoystickValue());
+		if (Math.abs(Robot.lift.getPosition()) > 50000){
+			Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue()/2, Robot.oi.getRightXboxJoystickValue()/2);
+		}
+		
+		else {
+			Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue(), Robot.oi.getRightXboxJoystickValue());
+		}
+   		
 	}
 
 	@Override

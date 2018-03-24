@@ -114,7 +114,7 @@ public class OI {
 		leftAxis = xboxDrive.getY(Hand.kLeft);
 		// Allow for up to 10% of joystick noises
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
-    	return leftAxis;
+    	return -leftAxis;
 	}
 
 	// Drivetrain Tank Drive Right

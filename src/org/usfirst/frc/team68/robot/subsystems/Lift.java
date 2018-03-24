@@ -24,8 +24,6 @@ public class Lift extends Subsystem {
 	private WPI_TalonSRX liftMotor;
     private DigitalInput limitSwitchUp;
     private DigitalInput limitSwitchDown;
-    private Counter counterUp;
-    private Counter counterDown;
 	private Boolean manualBool;
 	
 	private static Lift lift;
@@ -62,15 +60,9 @@ public class Lift extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		//Needs to be fixed somehow. Not sure what happened
 		//setDefaultCommand(new LiftManual());
 	}
 	public void setLiftSpeed(double speed) {
-		SmartDashboard.putNumber("LiftSpeed", speed);
-    	/*if(this.getSwitchUp() || this.getSwitchDown()) {
-    		speed = 0;
-    	}*/
 		liftMotor.set(speed);
 	}
 	public void setControlModePercentOutput(double speed) {
@@ -95,6 +87,8 @@ public class Lift extends Subsystem {
         return limitSwitchUp.get();
     }*/
     
+	
+	
     public boolean getSwitchDown() {
         return limitSwitchDown.get();
     }
