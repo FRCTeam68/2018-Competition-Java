@@ -105,10 +105,10 @@ public class RobotMap {
 	public static final double LIFT_SPEED_UP = 0.75;
 	public static final double  LIFT_SPEED_STOP = 0;
 	public static final double LIFT_SPEED_DOWN = -0.75;
-	public static final double LIFT_NORMAL_SCALE = 72500.0;
-	public static final double LIFT_HIGH_SCALE = 93000.0;
-	public static final double LIFT_NORMAL_SWITCH = 29000.0;
-	public static final double LIFT_GROUND = 1750.0;
+	public static final double LIFT_NORMAL_SCALE = -72500.0;
+	public static final double LIFT_HIGH_SCALE = -93000.0;
+	public static final double LIFT_NORMAL_SWITCH = -29000.0;
+	public static final double LIFT_GROUND = -1750.0;
 	
 	//public static final int LIFT_LIMIT_SWITCH_UP = 2;
 	public static final int LIFT_LIMIT_SWITCH_DOWN = 3;

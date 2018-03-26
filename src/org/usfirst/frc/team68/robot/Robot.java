@@ -64,8 +64,8 @@ public class Robot extends IterativeRobot {
 		endGame = EndGame.getEndGame();
 		vision = Vision.getVision();
 		/*UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(640, 320);
-        */
+		camera.setResolution(640, 320);*/
+        
 		Robot.compressor.start();
 		centerAuto = new CenterAutoStartCommand(null);
 		driveStraight = new DriveStraight(null);
@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 
 
 	    //Choosing strategy
-	    Robot.intake.intakeUpPosition();
+	    //Robot.intake.intakeUpPosition();
 	    Robot.driveTrain.setShifterHigh();
 	    stratChooser = new SendableChooser<>();
 	    stratChooser.addObject("SW", "SW");
@@ -125,7 +125,7 @@ public class Robot extends IterativeRobot {
 		Robot.driveTrain.zeroEncoders();
 		Robot.driveTrain.normalDrivetrain();
 		Robot.driveTrain.setShifterHigh();
-		Robot.intake.intakeUpPosition();
+		//Robot.intake.intakeUpPosition();
 
         Command position = autoChooser.getSelected();
     
@@ -181,7 +181,7 @@ public class Robot extends IterativeRobot {
     	if (Robot.lift.getSwitchDown() == false) {
     		Robot.lift.zeroEncoder();
     	}
-    	Robot.intake.intakeUpPosition();
+    	//Robot.intake.intakeUpPosition();
     	Robot.intake.intakeNormal();
 
 		// This makes sure that the autonomous stops running when

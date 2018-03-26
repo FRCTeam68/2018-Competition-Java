@@ -39,7 +39,7 @@ public class Lift extends Subsystem {
 	{
 		liftMotor = new WPI_TalonSRX(RobotMap.LIFT_MOTORS);
 		liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		liftMotor.setSensorPhase(false); 
+		liftMotor.setSensorPhase(true); 
 		liftMotor.configNominalOutputForward(0, 0);
 		liftMotor.configNominalOutputReverse(0, 0);
 		liftMotor.configPeakOutputForward(.4,0); 
@@ -55,7 +55,9 @@ public class Lift extends Subsystem {
 		manualBool = true;
 		//limitSwitchUp = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_UP);
 		limitSwitchDown = new DigitalInput(RobotMap.LIFT_LIMIT_SWITCH_DOWN);
-
+		/*liftMotor.configMotionAcceleration(arg0, 0);
+		liftMotor.configMotionCruiseVelocity(arg0, 0);
+	*/	
 	}
 
 	@Override
@@ -73,6 +75,10 @@ public class Lift extends Subsystem {
 		liftMotor.set(ControlMode.Position, position);
 	}
 	
+/*	public void setMotionMagicPosition(double position) {
+		liftMotor.set(ControlMode.MotionMagic, position);
+	}
+*/	
 	public double getPosition() {
 		double position = 0;
 		position = liftMotor.getSelectedSensorPosition(0);

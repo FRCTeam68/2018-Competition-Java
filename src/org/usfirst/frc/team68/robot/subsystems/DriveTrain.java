@@ -208,25 +208,6 @@ public class DriveTrain extends Subsystem {
     	rightRear.set(ControlMode.Position, right);
     }
     
-    public void setModeMotionMagic() {
-    	leftRear.set(ControlMode.MotionMagic, 0);
-    	rightRear.set(ControlMode.MotionMagic, 0);
-    	this.zeroEncoders();
-    }
-    
-    public void setMotionMagicProfile (int leftCruise, int leftAccel, int rightCruise, int rightAccel ) {
-    	leftRear.configMotionCruiseVelocity(leftCruise, 0);
-    	leftRear.configMotionAcceleration(leftAccel, 0);
-    	rightRear.configMotionCruiseVelocity(rightCruise, 0);
-    	rightRear.configMotionAcceleration(rightAccel, 0);
-    }
-    
-    public void setMotionMagicPosition(double leftPos, double rightPos) {
-//    	System.out.println("Setting Position to Left: " + leftPos +" Right: "+ rightPos);
-    	leftRear.set(leftPos);
-    	rightRear.set(rightPos);
-    }
-    
 	public double getPositionLeft() {
 		return leftRear.getSelectedSensorPosition(0);
 	}
@@ -246,7 +227,6 @@ public class DriveTrain extends Subsystem {
 	public double getClosedLoopErrorRight () {
 		return rightRear.getClosedLoopError(0);
 	}
-
 	  
     //**********************************************
     // For tuning drivetrain PID

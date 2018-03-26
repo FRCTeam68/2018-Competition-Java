@@ -22,13 +22,14 @@ public class DriveWithXboxJoysticks extends Command {
 	@Override
 	protected void execute() {
 		if (Math.abs(Robot.lift.getPosition()) > 50000){
-			Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue()/2, Robot.oi.getRightXboxJoystickValue()/2);
+			Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue()*.75, Robot.oi.getRightXboxJoystickValue()*.75);
 		}
 		
 		else {
 			Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue(), Robot.oi.getRightXboxJoystickValue());
 		}
    		
+		//Robot.driveTrain.tankDrive(Robot.oi.getLeftXboxJoystickValue(), Robot.oi.getRightXboxJoystickValue());
 	}
 
 	@Override

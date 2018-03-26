@@ -40,13 +40,13 @@ public class LiftSetPosition2 extends Command {
 	@Override
 	protected void execute() {
 		if (Robot.lift.getPosition() < setPoint) {
-			Robot.intake.intakeUpPosition();
+			//Robot.intake.intakeUpPosition();
 		
 		}
 
 		Robot.lift.setPosition(setPoint);
 		if (Math.abs(Robot.lift.getPosition() - setPoint) < 10000) {
-			Robot.intake.intakeDownPosition();
+			//Robot.intake.intakeDownPosition();
 		}
 		
 		isFinished = true;

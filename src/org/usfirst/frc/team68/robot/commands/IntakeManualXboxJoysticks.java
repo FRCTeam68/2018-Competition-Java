@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.Robot;
+import org.usfirst.frc.team68.robot.RobotMap;
 
 
 public class IntakeManualXboxJoysticks extends Command {
@@ -24,31 +25,20 @@ public class IntakeManualXboxJoysticks extends Command {
 
 	@Override
 	protected void execute() {
-		/*if (Robot.intake.getSwitch() == true && ((Robot.oi.getLeftXboxManipulatorJoystick() > 0.01) && (Robot.oi.getRightXboxManipulatorJoystick() < 0.01)))
-		{
-			
-		}*/
 		
-
-		
-		
-		if (Robot.intake.getSwitch() == false && (Robot.oi.getLeftXboxManipulatorJoystick() > 0.05) && (Robot.oi.getRightXboxManipulatorJoystick() < 0.05))  {
-			//Robot.intake.intakeUpPosition();
-			Robot.intake.intakeClamp();
-			Robot.intake.setIntakeSpeedLeft(0);
-	   		Robot.intake.setIntakeSpeedRight(0);
-		}
-		
-		if (Robot.intake.getSwitch() == true && (Robot.oi.getLeftXboxManipulatorJoystick() < 0.5) && (Robot.oi.getRightXboxManipulatorJoystick() > 0.5))  {
+		if (Robot.oi.getRightXboxManipulatorJoystick() > 0.5) {
 			Robot.intake.intakeNormal();
-			Robot.intake.setIntakeSpeedLeft(Robot.oi.getLeftXboxManipulatorJoystick()/2);
-			Robot.intake.setIntakeSpeedRight(Robot.oi.getRightXboxManipulatorJoystick()/2);
+			Robot.intake.setIntakeSpeed(Robot.oi.getRightXboxManipulatorJoystick()/2.5, Robot.oi.getRightXboxManipulatorJoystick()/2.5);
 		}
 		
-		else {
-			Robot.intake.setIntakeSpeedLeft(Robot.oi.getLeftXboxManipulatorJoystick());
-	   		Robot.intake.setIntakeSpeedRight(Robot.oi.getRightXboxManipulatorJoystick());
+		if(Robot.oi.getRightXboxManipulatorJoystick() < -0.1) {
+			Robot.intake.setIntakeSpeed(RobotMap.INTAKE_A_SPEED_FORWARD, RobotMap.INTAKE_B_SPEED_FORWARD);
+			if (Robot.intake.getSwitch() == false) {
+				Robot.intake.intakeClamp();
+				Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP, RobotMap.INTAKE_SPEED_STOP);
+			}
 		}
+		
 		
 		if (Robot.oi.getXboxManipulateLT() > 0) {
    			Robot.intake.intakeNormal();
