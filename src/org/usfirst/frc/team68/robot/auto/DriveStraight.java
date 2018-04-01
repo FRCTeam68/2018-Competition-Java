@@ -52,7 +52,7 @@ public class DriveStraight extends CommandGroup {
     	
     	File leftCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_left_detailed.csv");
 	    File rightCSV = new File("/home/lvuser/paths/DriveStraight/DriveStraight_right_detailed.csv");    
-	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
+	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 	        	
     	
     	

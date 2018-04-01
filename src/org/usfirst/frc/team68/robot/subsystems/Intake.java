@@ -139,7 +139,9 @@ public class Intake extends Subsystem {
     	}
     }
     
-    
+    public boolean isClamped() {
+    	return (intakeClamper.get() == Value.kForward);
+    }
     
 }
    

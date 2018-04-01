@@ -36,7 +36,7 @@ public class OI {
 	private Button xboxManipulateA;
 	private Button xboxManipulateB;
 	private Button xboxManipulateLT;
-	private Button xboxManipulateShare;
+	private Button xboxManipulateBack;
 	private Button xboxManipulateOptions;
 	private Button xboxManipulateSR;
 	private Button xboxLeftJoyStickButton;
@@ -92,8 +92,10 @@ public class OI {
 		xboxManipulateX.whileHeld(new LiftSetPosition2(RobotMap.LIFT_NORMAL_SCALE));
 
 		xboxManipulateY = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_Y);
-		xboxManipulateY.whileHeld(new LiftSetPosition2(RobotMap.LIFT_HIGH_SCALE));
-
+		xboxManipulateY.whileHeld(new LiftSetPosition2(RobotMap.LIFT_MAX_SCALE));
+		
+		xboxManipulateBack = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SHARE);
+		xboxManipulateBack.whenPressed(new LiftSwitchToManual());
 
 		//Intake
 		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
@@ -161,5 +163,9 @@ public class OI {
 		rightAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_RT);
 		// Allow for up to 10% of joystick noise
     	return rightAxis;
+	}
+	
+	public int getPOVManipulator() {
+		return xboxManipulate.getPOV();
 	}
 }

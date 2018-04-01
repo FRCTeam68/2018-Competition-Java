@@ -26,11 +26,13 @@ public class DrivetrainDriveTrajectory extends Command {
 			double l;
 			double r;
 			boolean isFinished = false;
+			boolean backwards;
 			
-		    public DrivetrainDriveTrajectory(File leftCSV, File rightCSV) 
+		    public DrivetrainDriveTrajectory(File leftCSV, File rightCSV, boolean backwardsBoolean) 
 		   {
 		    	requires(Robot.driveTrain);
 		    	path = new Path(leftCSV, rightCSV);
+		    	backwards = backwardsBoolean;
 		    }
 
 		    protected void initialize() 
@@ -49,10 +51,13 @@ public class DrivetrainDriveTrajectory extends Command {
 
 				//double theta = -Robot.navX.getYaw();
 				double theta = Robot.navX.getYaw();
+				if (backwards) {
+					theta = theta * -1;
+				}
 				double desiredHeading = Pathfinder.r2d(path.testEncLeft.getHeading());
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading-theta);
 				SmartDashboard.putNumber("angle,", angleDifference);
-				SmartDashboard.putNumber("Yaw", Robot.navX.getYaw());
+				SmartDashboard.putNumber("Yaw", theta);
 				double turn = 5 * (-1.0/80.0) * angleDifference;
 
 				Robot.driveTrain.drive(l+turn, r-turn);

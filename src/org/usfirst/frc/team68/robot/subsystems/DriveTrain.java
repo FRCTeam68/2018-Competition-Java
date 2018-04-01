@@ -62,12 +62,12 @@ public class DriveTrain extends Subsystem {
 		leftRear.configPeakOutputReverse(-1,0);
 		leftRear.configPeakCurrentDuration(0, 10);
 		
+		
 		leftRear.selectProfileSlot(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, 0);
 		leftRear.config_kF(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_F, 0);
 		leftRear.config_kP(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_P, 0);
 		leftRear.config_kI(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_I, 0);
 		leftRear.config_kD(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_D, 0);
-		
 		rightRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		rightRear.setInverted(true);
 		rightRear.setSensorPhase(true); 
@@ -76,7 +76,8 @@ public class DriveTrain extends Subsystem {
 		rightRear.configPeakOutputForward(1,0); 
 		rightRear.configPeakOutputReverse(-1,0); 
 		rightRear.configPeakCurrentDuration(0, 10);
-	
+		
+		
 		
 		rightRear.selectProfileSlot(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, 0);
 		rightRear.config_kF(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, RobotMap.DRIVETRAIN_RIGHT_PID_F, 0);
@@ -354,6 +355,20 @@ public class DriveTrain extends Subsystem {
 		leftRear.set(ControlMode.PercentOutput, 0);
 		rightRear.set(ControlMode.PercentOutput, 0);
 
+	}
+	
+	public void configOpenRamp() {
+		leftRear.configOpenloopRamp(0.25, 10);
+		rightRear.configOpenloopRamp(0.25, 10);
+		leftFront.configOpenloopRamp(0.25, 10);
+		rightFront.configOpenloopRamp(0.25, 10);
+	}
+	
+	public void clearOpenRamp() {
+		leftRear.configOpenloopRamp(0,0);
+		rightRear.configOpenloopRamp(0, 0);
+		leftFront.configOpenloopRamp(0, 0);
+		rightFront.configOpenloopRamp(0, 0);
 	}
 }
 

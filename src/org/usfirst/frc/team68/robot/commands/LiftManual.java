@@ -35,8 +35,16 @@ public class LiftManual extends Command {
 		
 		double position;
 		position = Robot.lift.getPosition();
-	
 		
+		if (Robot.oi.getPOVManipulator() == 0) {
+			Robot.lift.setPosition(position - 200.0);
+			
+		}
+		
+		/*else if (Robot.oi.getPOVManipulator() == 180) {
+			Robot.lift.setPosition(position + 750.0);
+		}*/
+	
 		
 	}
 

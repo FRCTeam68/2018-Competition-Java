@@ -27,7 +27,7 @@ public class LiftCommandGroupAutonCross extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new WaitCommand(4.5));
+    	addSequential(new WaitCommand(5));
     	addSequential(new LiftSetPosition(RobotMap.LIFT_HIGH_SCALE));
     	addSequential(new WaitCommand(1.75));
     	addSequential(new IntakeDownPosition());

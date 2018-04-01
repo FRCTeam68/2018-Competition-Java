@@ -20,9 +20,9 @@ public class Path {
 	int ticksPerRev = 8400; 
 	double wheelDiameter = 0.33333333;
 
-	double p = 2;
+	double p = 3;
 	double i = 0.0;
-	double d = .5;
+	double d = 0.5;
 	double velocityRatio = 1/maxVel;
 	double accelGain = 0.0;	
 	// The first argument is the proportional gain. Usually this will be quite high

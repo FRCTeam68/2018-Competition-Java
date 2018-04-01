@@ -3,6 +3,7 @@ package org.usfirst.frc.team68.robot.auto;
 import java.io.File;
 
 import org.usfirst.frc.team68.robot.RobotMap;
+import org.usfirst.frc.team68.robot.commands.CompressorStart;
 import org.usfirst.frc.team68.robot.commands.DriveBrakeMode;
 import org.usfirst.frc.team68.robot.commands.DriveCoastMode;
 import org.usfirst.frc.team68.robot.commands.DriveShiftHigh;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team68.robot.commands.IntakeManualOut;
 import org.usfirst.frc.team68.robot.commands.IntakeToggleClamp;
 import org.usfirst.frc.team68.robot.commands.IntakeUpPosition;
 import org.usfirst.frc.team68.robot.commands.LiftSetPosition;
+import org.usfirst.frc.team68.robot.commands.TurnToAngle;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Sendable;
@@ -60,30 +62,34 @@ public class CenterAutoStartCommand extends CommandGroup {
         	File rightCSV = new File(RobotMap.CenterLeftR);
 
         	System.out.println("Center in!");
+        	addSequential(new DriveBrakeMode());
         	addSequential(new DriveShiftHigh());
 	    	addSequential(new IntakeToggleClamp());
 	    	addSequential(new IntakeDownPosition());
 	    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
-	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
+	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 	    	addSequential(new IntakeAutoOut());
 	    	addSequential(new IntakeUpPosition());
+	    	addSequential(new CompressorStart());
 	    }
         	
         if(firstChar == 'R') {
         	System.out.println("Switch ---- Target: R");
         	File leftCSV = new File(RobotMap.CenterRightL);
         	File rightCSV = new File(RobotMap.CenterRightR);
-
+        	
         	addSequential(new DriveBrakeMode());
         	addSequential(new DriveShiftHigh());
 	    	addSequential(new IntakeToggleClamp());
 	    	addSequential(new IntakeDownPosition());
 	    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
-	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
+	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 
 	    	addSequential(new IntakeAutoOut());
 	    	addSequential(new WaitCommand(0.5));
 	    	addSequential(new IntakeUpPosition());
+	    	addSequential(new CompressorStart());
+	    	//addSequential(new TurnToAngle(90));
 
         }
     	

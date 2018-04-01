@@ -105,10 +105,11 @@ public class RobotMap {
 	public static final double LIFT_SPEED_UP = 0.75;
 	public static final double  LIFT_SPEED_STOP = 0;
 	public static final double LIFT_SPEED_DOWN = -0.75;
-	public static final double LIFT_NORMAL_SCALE = -72500.0;
-	public static final double LIFT_HIGH_SCALE = -93000.0;
-	public static final double LIFT_NORMAL_SWITCH = -29000.0;
-	public static final double LIFT_GROUND = -1750.0;
+	public static final double LIFT_NORMAL_SCALE = -73500.0;
+	public static final double LIFT_HIGH_SCALE = -94000.0;
+	public static final double LIFT_MAX_SCALE = -105500.0;
+	public static final double LIFT_NORMAL_SWITCH = -30000.0;
+	public static final double LIFT_GROUND = -3750.0;
 	
 	//public static final int LIFT_LIMIT_SWITCH_UP = 2;
 	public static final int LIFT_LIMIT_SWITCH_DOWN = 3;
@@ -129,7 +130,7 @@ public class RobotMap {
     public static final int INTAKE_MOTOR_B = 1;
     public static final double INTAKE_A_SPEED_FORWARD = 1;
     public static final double INTAKE_A_SPEED_REVERSE = -.4;
-    public static final double INTAKE_B_SPEED_FORWARD = -.9;
+    public static final double INTAKE_B_SPEED_FORWARD = -.8;
     public static final double INTAKE_B_SPEED_REVERSE = .4;
     public static final double INTAKE_SPEED_STOP = 0;
     public static final int INTAKE_LIMIT_SWITCH = 0;
@@ -142,8 +143,8 @@ public class RobotMap {
     public static final String CenterLeftL = "/home/lvuser/paths/CenterLeft/CenterLeft_left_detailed.csv";
     public static final String CenterLeftR = "/home/lvuser/paths/CenterLeft/CenterLeft_right_detailed.csv";
     
-    public static final String CenterRightL = "/home/lvuser/paths/CenterLeft/CenterRight_left_detailed.csv";
-    public static final String CenterRightR = "/home/lvuser/paths/CenterLeft/CenterRight_right_detailed.csv";
+    public static final String CenterRightL = "/home/lvuser/paths/CenterRight/CenterRight_left_detailed.csv";
+    public static final String CenterRightR = "/home/lvuser/paths/CenterRight/CenterRight_right_detailed.csv";
     
     //Left Switch
     public static final String LeftSwitchL = "/home/lvuser/paths/LeftSwitch/LeftSwitch_left_detailed.csv";

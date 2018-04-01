@@ -36,7 +36,6 @@ public class LiftSwitchToManual extends Command {
 		if(Robot.lift.getManualStatus() == false) {
 			Robot.lift.swapManual();
 			Robot.lift.setDefaultCommand(new LiftManual());
-			Robot.lift.setControlModePercentOutput(0);
 		}
 		
 		else if (Robot.lift.getManualStatus() == true) {

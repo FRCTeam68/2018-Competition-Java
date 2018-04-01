@@ -26,18 +26,30 @@ public class IntakeManualXboxJoysticks extends Command {
 	@Override
 	protected void execute() {
 		
-		if (Robot.oi.getRightXboxManipulatorJoystick() > 0.5) {
+		
+		
+		if (Robot.oi.getRightXboxManipulatorJoystick() > 0.1) {
 			Robot.intake.intakeNormal();
-			Robot.intake.setIntakeSpeed(Robot.oi.getRightXboxManipulatorJoystick()/2.5, Robot.oi.getRightXboxManipulatorJoystick()/2.5);
+			Robot.intake.setIntakeSpeed(-Robot.oi.getRightXboxManipulatorJoystick()/2.5, Robot.oi.getRightXboxManipulatorJoystick()/2.5);
 		}
 		
-		if(Robot.oi.getRightXboxManipulatorJoystick() < -0.1) {
-			Robot.intake.setIntakeSpeed(RobotMap.INTAKE_A_SPEED_FORWARD, RobotMap.INTAKE_B_SPEED_FORWARD);
+		else if(Robot.oi.getRightXboxManipulatorJoystick() < -0.1) {
 			if (Robot.intake.getSwitch() == false) {
 				Robot.intake.intakeClamp();
 				Robot.intake.setIntakeSpeed(RobotMap.INTAKE_SPEED_STOP, RobotMap.INTAKE_SPEED_STOP);
+				//Robot.intake.intakeUpPosition();
 			}
+			else {
+				Robot.intake.setIntakeSpeed(RobotMap.INTAKE_A_SPEED_FORWARD, RobotMap.INTAKE_B_SPEED_FORWARD);
+			}
+			
 		}
+		
+		else {
+			Robot.intake.setIntakeSpeed(0, 0);
+		}
+		
+		
 		
 		
 		if (Robot.oi.getXboxManipulateLT() > 0) {

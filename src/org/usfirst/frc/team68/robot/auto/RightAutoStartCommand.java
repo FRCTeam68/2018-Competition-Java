@@ -65,7 +65,7 @@ public class RightAutoStartCommand extends CommandGroup {
 	    		
 	    		File leftCSV = new File(RobotMap.DriveStraightL);
 	    	    File rightCSV = new File(RobotMap.DriveStraightR);    
-	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));	    	
+	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));	    	
 	    	}
     	
 	    	else if(firstChar == 'R') {
@@ -77,7 +77,7 @@ public class RightAutoStartCommand extends CommandGroup {
 		    	addSequential(new IntakeToggleClamp());
 		    	addSequential(new IntakeDownPosition());
 		    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 		    	addSequential(new WaitCommand(.25));
 		    	addSequential(new IntakeAutoOut());
 		    	addSequential(new IntakeUpPosition());
@@ -93,7 +93,7 @@ public class RightAutoStartCommand extends CommandGroup {
 	    		addSequential(new DriveShiftHigh());
 		    	addSequential(new IntakeToggleClamp());
 		    	addParallel(new LiftCommandGroupAutonStraight());
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA));
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA, false));
     		}
     		
     		else if (secondChar == 'L') {
@@ -105,7 +105,7 @@ public class RightAutoStartCommand extends CommandGroup {
 		    	addSequential(new IntakeToggleClamp());
 		    	
 		    	addParallel(new LiftCommandGroupAutonCross());
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA));
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA, false));
     		}
     	}
     	
@@ -116,7 +116,7 @@ public class RightAutoStartCommand extends CommandGroup {
 	    		System.out.println("Driving Straight");
 	    		File leftCSV = new File(RobotMap.DriveStraightL);
 	    	    File rightCSV = new File(RobotMap.DriveStraightR);    
-	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));	
+	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));	
 		    }
     	
 	    	else if(secondChar == 'R') {
@@ -128,7 +128,7 @@ public class RightAutoStartCommand extends CommandGroup {
 	    		addSequential(new DriveShiftHigh());
 		    	addSequential(new IntakeToggleClamp());
 		    	addParallel(new LiftCommandGroupAutonStraight());
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA));
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA, false));
 	    	}
     	}
     	
@@ -143,7 +143,7 @@ public class RightAutoStartCommand extends CommandGroup {
 		    	addSequential(new IntakeToggleClamp());
 		    	
 		    	addParallel(new LiftCommandGroupAutonStraight());
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA));		    	
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSVA, rightCSVA, false));		    	
 	    	}
 	    	else if(firstChar == 'R') {
 	    		File leftCSV = new File(RobotMap.RightSwitchL);
@@ -153,7 +153,7 @@ public class RightAutoStartCommand extends CommandGroup {
 		    	addSequential(new IntakeToggleClamp());
 		    	addSequential(new IntakeDownPosition());
 		    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
-		    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));
+		    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 		    	addSequential(new WaitCommand(.25));
 		    	addSequential(new IntakeAutoOut());
 		    	addSequential(new IntakeUpPosition());
@@ -162,7 +162,7 @@ public class RightAutoStartCommand extends CommandGroup {
 	    	else {
 	    		File leftCSV = new File(RobotMap.DriveStraightL);
 	    	    File rightCSV = new File(RobotMap.DriveStraightR);    
-	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV));	    	
+	    	    addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));	    	
 	    	}
     	}
     }

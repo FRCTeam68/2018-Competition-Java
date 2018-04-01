@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team68.robot.Robot;
+import org.usfirst.frc.team68.robot.RobotMap;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -39,14 +40,14 @@ public class LiftSetPosition2 extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.lift.getPosition() < setPoint) {
-			//Robot.intake.intakeUpPosition();
+		if (setPoint > RobotMap.LIFT_NORMAL_SCALE) {
+			Robot.intake.intakeUpPosition();
 		
 		}
-
+		Robot.intake.intakeClamp();
 		Robot.lift.setPosition(setPoint);
 		if (Math.abs(Robot.lift.getPosition() - setPoint) < 10000) {
-			//Robot.intake.intakeDownPosition();
+			Robot.intake.intakeDownPosition();
 		}
 		
 		isFinished = true;

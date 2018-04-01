@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.Compressor;
 
 import org.usfirst.frc.team68.robot.auto.CenterAutoStartCommand;
@@ -35,7 +36,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static NavX navX;
 	public static EndGame endGame;
-	public static Vision vision;
+	//public static Vision vision;
     private CenterAutoStartCommand centerAuto;
     private DriveStraight driveStraight;
     private LeftAutoStartCommand leftAuto;
@@ -54,7 +55,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// The RobotMap class should be the first to instantiate
 		robotMap = RobotMap.getRobotMap();
-
+		
 		// Create a single instance of each Robot subsystem here
 		compressor = new Compressor(RobotMap.PCM_MAIN);
 		navX = new NavX();
@@ -62,10 +63,10 @@ public class Robot extends IterativeRobot {
 		lift = Lift.getLift();
         intake = Intake.getIntake();
 		endGame = EndGame.getEndGame();
-		vision = Vision.getVision();
-		/*UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(640, 320);*/
-        
+		//vision = Vision.getVision();
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		//camera.setVideoMode(VideoMode.PixelFormat.kYUYV, 640, 480, 30);
+	 
 		Robot.compressor.start();
 		centerAuto = new CenterAutoStartCommand(null);
 		driveStraight = new DriveStraight(null);
@@ -107,6 +108,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+
 	}
 
 	/**
@@ -122,6 +124,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Robot.compressor.stop();
+		Robot.driveTrain.clearOpenRamp();
 		Robot.driveTrain.zeroEncoders();
 		Robot.driveTrain.normalDrivetrain();
 		Robot.driveTrain.setShifterHigh();
@@ -168,21 +172,26 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro Angle", Robot.navX.getAngle());
 	}
 
 	@Override
 	public void teleopInit() {
+		Robot.compressor.start();
+		Robot.driveTrain.clearOpenRamp();
 		Robot.driveTrain.setCoastMode();
 		Robot.driveTrain.setModePercentVbus();
     	Robot.driveTrain.setShifterHigh();
     	Robot.driveTrain.zeroEncoders();
     	Robot.driveTrain.normalDrivetrain();
-    	Robot.intake.setDefaultCommand(new IntakeManualXboxJoysticks());
     	if (Robot.lift.getSwitchDown() == false) {
     		Robot.lift.zeroEncoder();
     	}
-    	//Robot.intake.intakeUpPosition();
+    	Robot.intake.setDefaultCommand(new IntakeManualXboxJoysticks());
+    	
+    	Robot.intake.intakeUpPosition();
     	Robot.intake.intakeNormal();
+    	Robot.lift.setPosition(RobotMap.LIFT_GROUND);
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -202,11 +211,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("LiftSwitchDown", Robot.lift.getSwitchDown());
 		SmartDashboard.putBoolean("LiftManual", Robot.lift.getManualStatus());
 		SmartDashboard.putBoolean("Limit Switch Boolean", Robot.intake.getSwitch());
-		SmartDashboard.putBoolean("Gyro Calibrating", Robot.navX.isCalibrated());
-
-		if (Robot.lift.getSwitchDown() == false) {
-    		Robot.lift.zeroEncoder();
-    	}
+		SmartDashboard.putNumber("RightStick", Robot.oi.getRightXboxManipulatorJoystick());
+		SmartDashboard.putBoolean("Clamped", Robot.intake.isClamped());
 	}
 
 	/**
