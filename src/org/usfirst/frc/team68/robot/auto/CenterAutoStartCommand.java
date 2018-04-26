@@ -10,6 +10,7 @@ import org.usfirst.frc.team68.robot.commands.DriveShiftHigh;
 import org.usfirst.frc.team68.robot.commands.DriveShiftLow;
 import org.usfirst.frc.team68.robot.commands.DrivetrainDriveTrajectory;
 import org.usfirst.frc.team68.robot.commands.IntakeAutoOut;
+import org.usfirst.frc.team68.robot.commands.IntakeClamp;
 import org.usfirst.frc.team68.robot.commands.IntakeDownPosition;
 import org.usfirst.frc.team68.robot.commands.IntakeManualOut;
 import org.usfirst.frc.team68.robot.commands.IntakeToggleClamp;
@@ -64,8 +65,8 @@ public class CenterAutoStartCommand extends CommandGroup {
         	System.out.println("Center in!");
         	addSequential(new DriveBrakeMode());
         	addSequential(new DriveShiftHigh());
-	    	addSequential(new IntakeToggleClamp());
-	    	addSequential(new IntakeDownPosition());
+        	addSequential(new IntakeClamp());
+        	addSequential(new IntakeDownPosition());
 	    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
 	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));
 	    	addSequential(new IntakeAutoOut());
@@ -75,12 +76,14 @@ public class CenterAutoStartCommand extends CommandGroup {
         	
         if(firstChar == 'R') {
         	System.out.println("Switch ---- Target: R");
+        	
+        	//Initiate the paths
         	File leftCSV = new File(RobotMap.CenterRightL);
         	File rightCSV = new File(RobotMap.CenterRightR);
         	
         	addSequential(new DriveBrakeMode());
         	addSequential(new DriveShiftHigh());
-	    	addSequential(new IntakeToggleClamp());
+	    	addSequential(new IntakeClamp());
 	    	addSequential(new IntakeDownPosition());
 	    	addSequential(new LiftSetPosition(RobotMap.LIFT_NORMAL_SWITCH));
 	    	addSequential(new DrivetrainDriveTrajectory(leftCSV, rightCSV, false));

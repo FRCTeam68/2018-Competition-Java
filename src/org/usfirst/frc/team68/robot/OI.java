@@ -66,6 +66,8 @@ public class OI {
 		xboxDriveA.whileHeld(new ExtendHooks());
 	
 		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
+//		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
+
 		//xboxDriveB.whileHeld(new WinchDown());		
 		
 		xboxDriveLB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_LB);
@@ -76,17 +78,17 @@ public class OI {
 
 		xboxDriveStart = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_BS);
 
-		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
 		
 		// Manipulator Xbox Controller Bindings
 		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE); 
 
 		//Lift Presets
-		xboxManipulateLB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LB);
-		xboxManipulateLB.whenPressed(new IntakeClamp());
-
-		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
-		xboxManipulateRB.whenPressed(new IntakeUpPosition());
+//		xboxManipulateLB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LB);
+//		xboxManipulateLB.whenPressed(new IntakeClamp());
+		
+// 		MWE - Reprogram Intake sequence all to the manipulator right joystick
+//		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
+//		xboxManipulateRB.whenPressed(new IntakeUpPosition());
 		
 		xboxManipulateX = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_X);
 		xboxManipulateX.whileHeld(new LiftSetPosition2(RobotMap.LIFT_NORMAL_SCALE));

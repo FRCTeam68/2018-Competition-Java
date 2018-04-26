@@ -12,6 +12,9 @@ import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
 public class Path {
+	
+	/* Settings & drivetrain characteristics */
+	
 	double timeStep = 0.05;
 	double maxVel = 3;
 	double maxAccel = 2;
@@ -20,9 +23,11 @@ public class Path {
 	int ticksPerRev = 8400; 
 	double wheelDiameter = 0.33333333;
 
-	double p = 3;
+	/* PID values and kV, kA, 
+	 * Recommend reading Drivetrain Characterization from Blair Witch to get velocityRatio, maxVel, etc*/
+	double p = 3.0;
 	double i = 0.0;
-	double d = 0.5;
+	double d = 0.6;
 	double velocityRatio = 1/maxVel;
 	double accelGain = 0.0;	
 	// The first argument is the proportional gain. Usually this will be quite high
@@ -35,6 +40,7 @@ public class Path {
 		double l;
 		double r;
 
+		/* Find and create trajectory, create followers with input from encoders */
 		public Trajectory forwardLeftTrajectory;
 		public Trajectory forwardRightTrajectory;
 		Trajectory forwardTrajectory;
@@ -44,6 +50,7 @@ public class Path {
 	
 	public Path(File leftCSV, File rightCSV) {
 		try{	
+			/* Create trajectory from CSV files */
 			System.out.println("Generating trajectory...");
 			Trajectory trajectoryLW = Pathfinder.readFromCSV(leftCSV);
 			Trajectory trajectoryRW = Pathfinder.readFromCSV(rightCSV);
@@ -51,13 +58,18 @@ public class Path {
 
 			System.out.println("Trajectory Generation completed");
 			
-						
+			/* Create and configure the encoder followers using the previous settings */
 			testEncLeft = new EncoderFollower(trajectoryLW);
 			testEncRight = new EncoderFollower(trajectoryRW);
+			/* Args (Encoder vals, ticksPerRev, wheelDiameter) */
 			testEncLeft.configureEncoder(Robot.driveTrain.getPositionLeftPF(), ticksPerRev, wheelDiameter);
 			testEncRight.configureEncoder(Robot.driveTrain.getPositionRightPF(), ticksPerRev, wheelDiameter);
+			
+			// Configure PIDVA
 			testEncLeft.configurePIDVA(p, i, d, velocityRatio, accelGain);
 			testEncRight.configurePIDVA(p, i, d, velocityRatio, accelGain);
+			
+			//Set mode PercentOutput
 			Robot.driveTrain.setModePercentVbus();
 			
 		}catch(Exception e){

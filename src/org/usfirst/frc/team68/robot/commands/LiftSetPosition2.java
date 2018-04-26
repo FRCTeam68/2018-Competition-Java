@@ -44,11 +44,18 @@ public class LiftSetPosition2 extends Command {
 			Robot.intake.intakeUpPosition();
 		
 		}
-		Robot.intake.intakeClamp();
+		if (setPoint < RobotMap.LIFT_GROUND) {
+			Robot.intake.intakeClamp();
+		} else {
+			// MWE - Per Eric - At ground level we should not be clamped
+			Robot.intake.intakeNormal();
+		}
+		
 		Robot.lift.setPosition(setPoint);
 		if (Math.abs(Robot.lift.getPosition() - setPoint) < 10000) {
 			Robot.intake.intakeDownPosition();
 		}
+		
 		
 		isFinished = true;
 
@@ -63,7 +70,10 @@ public class LiftSetPosition2 extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-
+		// MWE
+    	if (Robot.lift.getSwitchDown() == false) {
+    		Robot.lift.zeroEncoder();
+    	}
 	}
 
 	// Called when another command which requires one or more of the same

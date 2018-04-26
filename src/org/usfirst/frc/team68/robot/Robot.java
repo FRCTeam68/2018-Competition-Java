@@ -65,6 +65,9 @@ public class Robot extends IterativeRobot {
 		endGame = EndGame.getEndGame();
 		//vision = Vision.getVision();
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(160, 120);
+		camera.setFPS(10);
+		
 		//camera.setVideoMode(VideoMode.PixelFormat.kYUYV, 640, 480, 30);
 	 
 		Robot.compressor.start();
@@ -74,11 +77,14 @@ public class Robot extends IterativeRobot {
 		rightAuto = new RightAutoStartCommand(null);
 		
 		// The OI class should be the last to be instantiated
+		
 		autoChooser = new SendableChooser<>();
 	    autoChooser.addObject("Center Start Auto", centerAuto);
 	    autoChooser.addObject("Drive Straight", driveStraight);
 	    autoChooser.addObject("Left Start Auto", leftAuto);
 	    autoChooser.addObject("Right Start Auto", rightAuto);
+	    autoChooser.addDefault("Center Start Auto", centerAuto);
+
 
 
 	    //Choosing strategy
@@ -213,6 +219,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Limit Switch Boolean", Robot.intake.getSwitch());
 		SmartDashboard.putNumber("RightStick", Robot.oi.getRightXboxManipulatorJoystick());
 		SmartDashboard.putBoolean("Clamped", Robot.intake.isClamped());
+		//MWE
+    	if (Robot.lift.getSwitchDown() == false) {
+    		Robot.lift.zeroEncoder();
+    	}
 	}
 
 	/**

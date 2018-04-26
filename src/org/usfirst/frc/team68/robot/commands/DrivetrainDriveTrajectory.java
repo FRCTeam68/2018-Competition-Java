@@ -42,32 +42,34 @@ public class DrivetrainDriveTrajectory extends Command {
 		    protected void execute()
 		   {
 		    	
-		    	SmartDashboard.putNumber("L Enc", Robot.driveTrain.getPositionLeftPF());
-				SmartDashboard.putNumber("R Enc", Robot.driveTrain.getPositionRightPF());
-				l = path.testEncLeft.calculate(Robot.driveTrain.getPositionLeftPF());
+		    	/* Calculate the paths provided */
+		    	l = path.testEncLeft.calculate(Robot.driveTrain.getPositionLeftPF());
 				r = path.testEncRight.calculate(Robot.driveTrain.getPositionRightPF());
-				SmartDashboard.putNumber("path L", l);
-				SmartDashboard.putNumber("path R", r);
 
-				//double theta = -Robot.navX.getYaw();
+				/* Get navX values to compensate for the errors */
 				double theta = Robot.navX.getYaw();
 				if (backwards) {
 					theta = theta * -1;
 				}
+				
+				/* Find the heading and angle */
 				double desiredHeading = Pathfinder.r2d(path.testEncLeft.getHeading());
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading-theta);
-				SmartDashboard.putNumber("angle,", angleDifference);
-				SmartDashboard.putNumber("Yaw", theta);
+				
+				/* kP gain on the Gyroscope. Units are %output / degree. 
+				 * The 1/80 reduces it from degrees to 1/4.5th of a circle, and 0.8 is the actual gain. 
+				 * What it's saying is "at 80 degrees of error, make this term worth 5" */
 				double turn = 5 * (-1.0/80.0) * angleDifference;
 
+				/* Add power to motors to drive */
 				Robot.driveTrain.drive(l+turn, r-turn);
 
+				/* Check if the path is finished */
 		    	if(path.testEncLeft.isFinished() && path.testEncRight.isFinished()){
 			    	Robot.driveTrain.drive(0, 0);
 		    		System.out.println("Both trajectories finished");
 		    		isFinished = true;
 		    	}
-				//SmartDashboard.putNumber("Segment");
 
 				firstRun = false;
 		    }

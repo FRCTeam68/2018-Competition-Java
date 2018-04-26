@@ -27,14 +27,14 @@ public class LiftCommandGroupAutonStraight extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new WaitCommand(2.1));
+    	addSequential(new WaitCommand(1.8));
     	addSequential(new LiftSetPosition(RobotMap.LIFT_HIGH_SCALE));
-    	addSequential(new WaitCommand(1.75));
+    	addSequential(new WaitCommand(1.8));
     	addSequential(new IntakeDownPosition());
     	addSequential(new WaitCommand(0.25));
     	addSequential(new IntakeAutoOut());
     	addSequential(new IntakeUpPosition());
-    	addSequential(new WaitCommand(0.25));
+    	addSequential(new WaitCommand(0.5));
     	addSequential(new LiftSetPosition(RobotMap.LIFT_GROUND));
 
     }

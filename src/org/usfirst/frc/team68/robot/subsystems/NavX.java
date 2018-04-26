@@ -56,25 +56,6 @@ public class NavX implements PIDOutput { //this class controls the PID for the n
 		return rotateToAngleRate; 
 	}
 	
-	public boolean collisionDetected() {
-        boolean collisionDetected = false;
-        
-        double curr_world_linear_accel_x = navX.getWorldLinearAccelX();
-        double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
-        last_world_linear_accel_x = curr_world_linear_accel_x;
-        double curr_world_linear_accel_y = navX.getWorldLinearAccelY();
-        double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
-        last_world_linear_accel_y = curr_world_linear_accel_y;
-        
-        if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
-             ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {
-            collisionDetected = true;
-        }
-        
-        SmartDashboard.putBoolean("Collision Detected", collisionDetected);
-        return collisionDetected;
-	}
-	
 	public double getRoll() {
 		return navX.getRoll();
 	}

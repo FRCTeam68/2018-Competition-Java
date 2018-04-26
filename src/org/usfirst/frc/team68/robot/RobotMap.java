@@ -105,11 +105,21 @@ public class RobotMap {
 	public static final double LIFT_SPEED_UP = 0.75;
 	public static final double  LIFT_SPEED_STOP = 0;
 	public static final double LIFT_SPEED_DOWN = -0.75;
-	public static final double LIFT_NORMAL_SCALE = -73500.0;
-	public static final double LIFT_HIGH_SCALE = -94000.0;
-	public static final double LIFT_MAX_SCALE = -105500.0;
+	public static final double LIFT_NORMAL_SCALE = -70750.0;
+	//public static final double LIFT_NORMAL_SCALE = -73500.0;
+	public static final double LIFT_HIGH_SCALE = -91250.0;
+	//public static final double LIFT_HIGH_SCALE = -94000.0;
+
+	//public static final double LIFT_MAX_SCALE = -105500.0;
+	public static final double LIFT_MAX_SCALE = -102750.0;
+
 	public static final double LIFT_NORMAL_SWITCH = -30000.0;
-	public static final double LIFT_GROUND = -3750.0;
+
+	
+	// MWE - Set ground level back to zero since the inner wheels on
+	// the intake have been removed.
+	// public static final double LIFT_GROUND = -3750.0;
+	public static final double LIFT_GROUND = 0.00;
 	
 	//public static final int LIFT_LIMIT_SWITCH_UP = 2;
 	public static final int LIFT_LIMIT_SWITCH_DOWN = 3;
@@ -130,7 +140,7 @@ public class RobotMap {
     public static final int INTAKE_MOTOR_B = 1;
     public static final double INTAKE_A_SPEED_FORWARD = 1;
     public static final double INTAKE_A_SPEED_REVERSE = -.4;
-    public static final double INTAKE_B_SPEED_FORWARD = -.8;
+    public static final double INTAKE_B_SPEED_FORWARD = -1.0;
     public static final double INTAKE_B_SPEED_REVERSE = .4;
     public static final double INTAKE_SPEED_STOP = 0;
     public static final int INTAKE_LIMIT_SWITCH = 0;
@@ -138,7 +148,7 @@ public class RobotMap {
 	// Pneumatic Control Module CAN Bus ID
     public static final int PCM_MAIN = 9;
     
-    //Paths (Do not touch)
+    //Paths to the CSV files for the paths (Do not touch)
     
     public static final String CenterLeftL = "/home/lvuser/paths/CenterLeft/CenterLeft_left_detailed.csv";
     public static final String CenterLeftR = "/home/lvuser/paths/CenterLeft/CenterLeft_right_detailed.csv";
