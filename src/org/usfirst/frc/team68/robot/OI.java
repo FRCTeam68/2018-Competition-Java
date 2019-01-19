@@ -3,6 +3,8 @@ package org.usfirst.frc.team68.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team68.robot.commands.*;
 
@@ -14,36 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 	
-	// Declare instance variables here
-
 	// Driver's Xbox Controller
 	private XboxController xboxDrive;
 	private Button xboxDriveA;
@@ -55,15 +28,22 @@ public class OI {
 	private Button xboxDriveBack;
 	private Button xboxDriveStart;
 	
-	// Manipulators Xbox Controller
 	private XboxController xboxManipulate;
+	private Button xboxManipulateLB;
+	private Button xboxManipulateX;
+	private Button xboxManipulateY;
+	private Button xboxManipulateRB;
+	private Button xboxManipulateA;
+	private Button xboxManipulateB;
+	private Button xboxManipulateLT;
+	private Button xboxManipulateBack;
+	private Button xboxManipulateOptions;
+	private Button xboxManipulateSR;
+	private Button xboxLeftJoyStickButton;
 	
-	// Declare class variables here
 	private static OI oi;
 	
-	// Provide a class method using the Singleton
-	// design pattern which guarantees only one 
-	// intstance of this class will get created.
+
 	public static OI getOI(){
 		if (oi == null) {
 			oi = new OI();
@@ -71,25 +51,62 @@ public class OI {
 		return oi;	
 	}
 	
-	// Constructor
+	
 	private OI() {
 		
-		// Drivers Xbox Controller Bindings
 		xboxDrive = new XboxController(RobotMap.XBOX_DRIVE);	
 		
 		xboxDriveX = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_X);
-
+		xboxDriveX.whileHeld(new WinchUp());
+		
 		xboxDriveY = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_Y);
+		xboxDriveY.whileHeld(new RetractHooks());
+		
+		xboxDriveA = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_A);
+		xboxDriveA.whileHeld(new ExtendHooks());
+	
+		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
+//		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);	
 
+		//xboxDriveB.whileHeld(new WinchDown());		
+		
 		xboxDriveLB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_LB);
-
+		xboxDriveLB.whenPressed(new DriveShiftLow());
+		
 		xboxDriveRB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_RB);
+		xboxDriveRB.whenPressed(new DriveShiftHigh());
 
 		xboxDriveStart = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_BS);
 
-		xboxDriveA = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_A);
+		
+		// Manipulator Xbox Controller Bindings
+		xboxManipulate = new XboxController(RobotMap.XBOX_MANIPULATE); 
 
-		xboxDriveB = new JoystickButton(xboxDrive, RobotMap.XBOX_DRIVE_B);		
+		//Lift Presets
+//		xboxManipulateLB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_LB);
+//		xboxManipulateLB.whenPressed(new IntakeClamp());
+		
+// 		MWE - Reprogram Intake sequence all to the manipulator right joystick
+//		xboxManipulateRB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_RB);
+//		xboxManipulateRB.whenPressed(new IntakeUpPosition());
+		
+		xboxManipulateX = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_X);
+		xboxManipulateX.whileHeld(new LiftSetPosition2(RobotMap.LIFT_NORMAL_SCALE));
+
+		xboxManipulateY = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_Y);
+		xboxManipulateY.whileHeld(new LiftSetPosition2(RobotMap.LIFT_MAX_SCALE));
+		
+		xboxManipulateBack = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_SHARE);
+		xboxManipulateBack.whenPressed(new LiftSwitchToManual());
+
+		//Intake
+		xboxManipulateB = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_B);
+		xboxManipulateB.whileHeld(new LiftSetPosition2(RobotMap.LIFT_NORMAL_SWITCH));
+
+
+		xboxManipulateA = new JoystickButton(xboxManipulate, RobotMap.XBOX_MANIPULATE_A);
+		xboxManipulateA.whileHeld(new LiftSetPosition2(RobotMap.LIFT_GROUND));
+		
 		
 	}
 	
@@ -99,9 +116,9 @@ public class OI {
 	public double getLeftXboxJoystickValue() {
 		double leftAxis;
 		leftAxis = xboxDrive.getY(Hand.kLeft);
-		// Allow for up to 10% of joystick noise
+		// Allow for up to 10% of joystick noises
 		leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
-    	return leftAxis;
+    	return -leftAxis;
 	}
 
 	// Drivetrain Tank Drive Right
@@ -111,6 +128,46 @@ public class OI {
 		// Allow for up to 10% of joystick noise
 		rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
     	return rightAxis;
+    	
 	}
 	
+	// Manipulator Joystick for Lift
+	public double getLeftXboxManipulatorJoystick() {
+		double leftAxis;
+		leftAxis = xboxManipulate.getY(Hand.kLeft);
+		/*if (leftAxis > 0) {
+			leftAxis = 1/2 * leftAxis;
+		}*/
+		// Allow for up to 10% of joystick noise
+    	return leftAxis;
+	}
+	
+	public double getRightXboxManipulatorJoystick() {
+		double leftAxis;
+		leftAxis = -xboxManipulate.getY(Hand.kRight);
+		/*if (leftAxis > 0) {
+			leftAxis = 1/2 * leftAxis;
+		}*/
+		// Allow for up to 10% of joystick noise
+    	return leftAxis;
+	}
+	
+	//Intake In
+	public double getXboxManipulateLT() {
+		double leftAxis;
+		leftAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_LT);
+		// Allow for up to 10% of joystick noise
+    	return leftAxis;
+	}
+	
+	public double getXboxManipulateRT() {
+		double rightAxis;
+		rightAxis = xboxManipulate.getRawAxis(RobotMap.XBOX_MANIPULATE_RT);
+		// Allow for up to 10% of joystick noise
+    	return rightAxis;
+	}
+	
+	public int getPOVManipulator() {
+		return xboxManipulate.getPOV();
+	}
 }

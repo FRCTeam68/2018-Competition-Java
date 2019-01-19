@@ -28,16 +28,12 @@ public class DriveTrain extends Subsystem {
 	private DifferentialDrive drive;
 	private DoubleSolenoid driveShifter;
 	private boolean reverseDrive;
-	private PigeonIMU gyro; 
-	private PigeonIMU.GeneralStatus gyroStatus; 
-	private double [] gyroYPR; 
 	private double leftRearCruiseVelocity; 
 	private double leftRearAcceleration; 
 	private double rightRearCruiseVelocity; 
 	private double rightRearAcceleration; 
 	private double leftRearSetPoint; 
-	private double rightRearSetPoint; 
-	
+	private double rightRearSetPoint; 	
 	private double targetSpeedLeft;
 	private double targetSpeedRight;
 	StringBuilder reportPIDLeft = new StringBuilder();
@@ -59,24 +55,30 @@ public class DriveTrain extends Subsystem {
 		
 		leftRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
 		
-		leftRear.setSensorPhase(true); 
+		leftRear.setSensorPhase(false);
 		leftRear.configNominalOutputForward(0, 0);
 		leftRear.configNominalOutputReverse(0, 0);
 		leftRear.configPeakOutputForward(1,0); 
-		leftRear.configPeakOutputReverse(-1,0); 
+		leftRear.configPeakOutputReverse(-1,0);
+		leftRear.configPeakCurrentDuration(0, 10);
+		
+		
 		leftRear.selectProfileSlot(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, 0);
 		leftRear.config_kF(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_F, 0);
 		leftRear.config_kP(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_P, 0);
 		leftRear.config_kI(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_I, 0);
 		leftRear.config_kD(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, RobotMap.DRIVETRAIN_LEFT_PID_D, 0);
-		
 		rightRear.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
-		
+		rightRear.setInverted(true);
 		rightRear.setSensorPhase(true); 
 		rightRear.configNominalOutputForward(0, 0);
 		rightRear.configNominalOutputReverse(0, 0);
 		rightRear.configPeakOutputForward(1,0); 
 		rightRear.configPeakOutputReverse(-1,0); 
+		rightRear.configPeakCurrentDuration(0, 10);
+		
+		
+		
 		rightRear.selectProfileSlot(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, 0);
 		rightRear.config_kF(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, RobotMap.DRIVETRAIN_RIGHT_PID_F, 0);
 		rightRear.config_kP(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, RobotMap.DRIVETRAIN_RIGHT_PID_P, 0);
@@ -85,10 +87,13 @@ public class DriveTrain extends Subsystem {
 		
 		leftFront = new WPI_TalonSRX(RobotMap.DRIVETRAIN_LEFT_FRONT);
 		leftFront.set(ControlMode.Follower, leftRear.getDeviceID());
+		leftFront.configPeakCurrentDuration(0, 10);
 
 		rightFront = new WPI_TalonSRX(RobotMap.DRIVETRAIN_RIGHT_FRONT);
 		rightFront.set(ControlMode.Follower, rightRear.getDeviceID());
-
+		rightFront.configPeakCurrentDuration(0, 10);
+		rightFront.setInverted(true);
+		
 		drive = new DifferentialDrive(leftRear, rightRear);
 		
 		// setting the setSafetyEnabled out because there is a known issue
@@ -107,12 +112,8 @@ public class DriveTrain extends Subsystem {
 	
 		driveShifter = new DoubleSolenoid(RobotMap.PCM_MAIN, RobotMap.DRIVETRAIN_SHIFT_HIGH, RobotMap.DRIVETRAIN_SHIFT_LOW);
 		// Start in low gear
-//		this.setShifterLow();
+		this.setShifterLow();
 		
-		gyro = new PigeonIMU(leftFront);
-		gyroStatus = new PigeonIMU.GeneralStatus();
-		gyroYPR = new double[3];
-	
 	}
 	
 	public void initDefaultCommand() {
@@ -125,14 +126,14 @@ public class DriveTrain extends Subsystem {
     
     public void setShifterHigh() {
     	driveShifter.set(Value.kForward);
-    	//SmartDashboard.putBoolean("High Gear", true);
+    	SmartDashboard.putBoolean("High Gear", true);
     }
     
     public void setShifterLow() {
     	driveShifter.set(Value.kReverse);
-    	//SmartDashboard.putBoolean("High Gear", false);
+    	SmartDashboard.putBoolean("High Gear", false);
     }
-    
+ 
     public void setDriveOrientation() {
     	// Reverse the current drive orientation
     	reverseDrive = !reverseDrive;
@@ -141,12 +142,51 @@ public class DriveTrain extends Subsystem {
     }
     
     public void zeroEncoders(){
+		Robot.navX.navX.zeroYaw();
     	leftRear.setSelectedSensorPosition(0,0,0);
     	rightRear.setSelectedSensorPosition(0,0,0);
     }
-
+    
+    public void invertDrivetrain() {
+    	//Invert motors
+    	leftRear.setInverted(true);
+    	rightRear.setInverted(false);
+    	leftFront.setInverted(true);
+    	rightFront.setInverted(false);
+    	
+    	// Invert encoders
+    	leftRear.setSensorPhase(false);
+    	rightRear.setSensorPhase(false);
+    }
+    
+    public void normalDrivetrain() {
+    	// Normalize motors
+    	leftRear.setInverted(false);
+    	rightRear.setInverted(true);
+    	leftFront.setInverted(false);
+    	rightFront.setInverted(true);
+    	
+    	// Normalize encoders
+    	leftRear.setSensorPhase(false);
+    	rightRear.setSensorPhase(false);
+    }
+    
     public DoubleSolenoid.Value getShifter() {
     	return driveShifter.get();
+    }
+    
+    public void setCoastMode() {
+		leftRear.setNeutralMode(NeutralMode.Coast);
+		leftFront.setNeutralMode(NeutralMode.Coast);
+		rightRear.setNeutralMode(NeutralMode.Coast);
+		rightFront.setNeutralMode(NeutralMode.Coast);
+    }
+    
+    public void setBrakeMode() {
+		leftRear.setNeutralMode(NeutralMode.Brake);
+		leftFront.setNeutralMode(NeutralMode.Brake);
+		rightRear.setNeutralMode(NeutralMode.Brake);
+		rightFront.setNeutralMode(NeutralMode.Brake);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -158,53 +198,15 @@ public class DriveTrain extends Subsystem {
 //    	SmartDashboard.putNumber("leftRear", leftSpeed);
 //    	SmartDashboard.putNumber("rightRear", rightSpeed);
     }
-    
-    public double [] getGyro() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR;
-    }
-    
-    public double getGyroYaw() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[0];
-    }
-    
-    public double getGyroPitch() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[1];
-    }
-    
-    public double getGyroRoll() {
-    	gyro.getYawPitchRoll(gyroYPR);
-    	return gyroYPR[2];
-    }
-    
+        
     public void setModePercentVbus () {
     	leftRear.set(ControlMode.PercentOutput,0);
-//    	leftRear.set(0);  Do we need this with the second parameter of the control mode setting?  Test it out?
        	rightRear.set(ControlMode.PercentOutput,0);
-//    	rightRear.set(0);
     }
     
-    public void setModeMotionMagic() {
-    	leftRear.set(ControlMode.MotionMagic, 0);
-//    	leftRear.set(0);
-    	rightRear.set(ControlMode.MotionMagic, 0);
-//    	rightRear.set(0);
-    	this.zeroEncoders();
-    }
-    
-    public void setMotionMagicProfile (int leftCruise, int leftAccel, int rightCruise, int rightAccel ) {
-    	leftRear.configMotionCruiseVelocity(leftCruise, 0);
-    	leftRear.configMotionAcceleration(leftAccel, 0);
-    	rightRear.configMotionCruiseVelocity(rightCruise, 0);
-    	rightRear.configMotionAcceleration(rightAccel, 0);
-    }
-    
-    public void setMotionMagicPosition(double leftPos, double rightPos) {
-//    	System.out.println("Setting Position to Left: " + leftPos +" Right: "+ rightPos);
-    	leftRear.set(leftPos);
-    	rightRear.set(rightPos);
+    public void setPosition(double left, double right) {
+    	leftRear.set(ControlMode.Position, left);
+    	rightRear.set(ControlMode.Position, right);
     }
     
 	public double getPositionLeft() {
@@ -215,12 +217,16 @@ public class DriveTrain extends Subsystem {
 		return rightRear.getSelectedSensorPosition(0);
 	}
 	
-	public double getClosedLoopErrorRight () {
-		return rightRear.getClosedLoopError(0);
+	public int getPositionLeftPF() {
+		return leftRear.getSelectedSensorPosition(0);
 	}
 	
-	public double getClosedLoopErrorLeft () {
-		return leftRear.getClosedLoopError(0);
+	public int getPositionRightPF() {
+		return rightRear.getSelectedSensorPosition(0);
+	}
+	
+	public double getClosedLoopErrorRight () {
+		return rightRear.getClosedLoopError(0);
 	}
 	  
     //**********************************************
@@ -265,8 +271,6 @@ public class DriveTrain extends Subsystem {
 		leftRear.config_kI(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, IL, 0);
 		leftRear.config_kD(RobotMap.DRIVETRAIN_LEFT_PID_SLOT, DL, 0);
 
-    	targetSpeedLeft = speed;
-//    	this.setDriveLeftSpeed(SmartDashboard.getNumber("Drive Left Target Speed: ", targetSpeedLeft));
     }
 
     public void setDriveRightPID(double FR, double PR, double IR, double DR, double speed){
@@ -274,8 +278,7 @@ public class DriveTrain extends Subsystem {
 		rightRear.config_kP(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, PR, 0);
 		rightRear.config_kI(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, IR, 0);
 		rightRear.config_kD(RobotMap.DRIVETRAIN_RIGHT_PID_SLOT, DR, 0);
-    	targetSpeedRight = speed;
-    	//this.setDriveRightSpeed(SmartDashboard.getNumber("Drive Right Target RPM Value: ", targetSpeedRight));
+
     }
     
     public double getDriveLeftSpeed() {
@@ -288,6 +291,10 @@ public class DriveTrain extends Subsystem {
     
     public double getDriveRightSpeed() {
     	return rightRear.getActiveTrajectoryVelocity();
+    }
+    
+    public double getDriveRightSpeed2() {
+    	return rightRear.getSelectedSensorVelocity(0);
     }
  
     public String getPIDReportLeft() {
@@ -303,11 +310,7 @@ public class DriveTrain extends Subsystem {
     	reportPIDLeft.append("\terr:");
     	reportPIDLeft.append(leftRear.getClosedLoopError(0));
     	reportPIDLeft.append("\ttrg:");
-/*    	reportPIDLeft.append(leftRear.getMotionMagicCruiseVelocity());
-    	reportPIDLeft.append("\tactvel:");
-    	reportPIDLeft.append(leftRear.getMotionMagicActTrajVelocity());
-    	reportPIDLeft.append("\n");
-*/
+
     	return reportPIDLeft.toString();
     }
     
@@ -328,6 +331,44 @@ public class DriveTrain extends Subsystem {
 
     	return reportPIDRight.toString();
     }
+    
+	public void drive(double l, double r){		
+		leftRear.set(l);
+		rightRear.set(r);
+	}
+	
+	public void setRobotHeading(double heading) {
+		double error = (Robot.navX.getAngle() - heading);
+		rightDrive(error*RobotMap.kpTurn);
+		leftDrive(error*RobotMap.kpTurn);
+	}
+	
+	public void leftDrive(double power) {
+		leftRear.set(ControlMode.PercentOutput, power);
+	}
+	
+	public void rightDrive (double power) {
+		rightRear.set(ControlMode.PercentOutput, power);
+	}
+	
+	public void stopDriving() {
+		leftRear.set(ControlMode.PercentOutput, 0);
+		rightRear.set(ControlMode.PercentOutput, 0);
 
+	}
+	
+	public void configOpenRamp() {
+		leftRear.configOpenloopRamp(0.25, 10);
+		rightRear.configOpenloopRamp(0.25, 10);
+		leftFront.configOpenloopRamp(0.25, 10);
+		rightFront.configOpenloopRamp(0.25, 10);
+	}
+	
+	public void clearOpenRamp() {
+		leftRear.configOpenloopRamp(0,0);
+		rightRear.configOpenloopRamp(0, 0);
+		leftFront.configOpenloopRamp(0, 0);
+		rightFront.configOpenloopRamp(0, 0);
+	}
 }
 
